@@ -1,10 +1,11 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { Layout } from '../layouts/layout';
+import './main.scss';
 
 function MainComponent(){
     console.log('rendering');
     return (
-        <main>
+        <main className="main">
             <Layout />
         </main>
     )
