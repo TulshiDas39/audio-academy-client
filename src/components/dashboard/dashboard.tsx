@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Routes } from '../../lib';
+import { UiRoutes } from '../../lib';
 
 function DashboardComponent(){
     return (<div>
         <h1>dashboard</h1>
-        <Link to={Routes.Saved} >Saved</Link>
+        <Link to={UiRoutes.Saved} >Saved</Link>
     </div>)
 }
 

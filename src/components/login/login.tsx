@@ -1,17 +1,17 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { Constants, Routes } from '../../lib';
+import { Constants, UiRoutes } from '../../lib';
+import { FormView, TitleView } from './subComponents';
 
 function LoginComponent(){
     return (
-        <Row>
-            <Col className="border" xs sm={8}>
-                <h1>{Constants.SiteName}</h1>
-                <Link to={Routes.Privacy} >Privacy</Link>
+        <Row className="h-100 no-gutters align-items-center flex-column flex-sm-row mr-1">
+            <Col className="flex-grow-0 flex-grow-sm-1" xs sm={8}>
+                <TitleView />
             </Col>
-            <Col className="border" xs sm={4}>
-                Right
+            <Col className="flex-grow-1" xs sm={4}>
+                <FormView />
             </Col>
         </Row>
     )

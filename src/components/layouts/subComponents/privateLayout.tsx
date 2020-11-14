@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Routes } from '../../../lib';
+import { UiRoutes } from '../../../lib';
 
 const Dashboard = React.lazy(() => import('../../dashboard/dashboard'));
 const Saved = React.lazy(() => import('../../saved/Saved'));
@@ -11,8 +11,8 @@ function PrivateLayoutComponent() {
     return (
         <Suspense fallback={null}>
             <Switch>
-                <Route path={Routes.Root} exact component={Dashboard} />
-                <Route path={Routes.Saved} exact component={Saved} />
+                <Route path={UiRoutes.Root} exact component={Dashboard} />
+                <Route path={UiRoutes.Saved} exact component={Saved} />
             </Switch>
         </Suspense>
     )

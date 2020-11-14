@@ -1,0 +1,13 @@
+body{
+    background-color: #f0f2f5;
+}
+
+.cur-point{
+    cursor: pointer;
+}
+.hover-underline:hover{
+    text-decoration: underline;
+}
+.hover-primary:hover{
+    color:$primary;
+}

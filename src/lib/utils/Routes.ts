@@ -1,7 +1,11 @@
-export class Routes{
+
+export class UiRoutes{
     static Root='/';
 
-    static Login = Routes.Root;
+    static Login = UiRoutes.Root;
+    static ForgotPassword = UiRoutes.Login+"/recover";
+
+    static SingUp = '/signup'
 
     static Privacy = '/privacy';
 

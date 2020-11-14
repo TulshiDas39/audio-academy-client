@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Routes } from '../../../lib';
+import { UiRoutes } from '../../../lib';
 
 const Login = React.lazy(()=>import('../../login/login'));
 const PrivacyPolicy = React.lazy(()=>import('../../privacyPolicy/privacyPolicy'));
@@ -10,8 +10,8 @@ function PublicLayoutComponent(){
     return (
         <Suspense fallback={null}>
             <Switch>
-                <Route path={Routes.Login} exact component={Login} />
-                <Route path={Routes.Privacy} exact component={PrivacyPolicy} />
+                <Route path={UiRoutes.Login} exact component={Login} />
+                <Route path={UiRoutes.Privacy} exact component={PrivacyPolicy} />
             </Switch>
         </Suspense>
     )
