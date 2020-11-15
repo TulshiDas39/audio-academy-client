@@ -1,9 +1,10 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { UiRoutes, useMultiState } from '../../../lib';
+import { Link, useHistory } from 'react-router-dom';
+import { AuthStorage, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
+import { apiLogin, TApiLoginRequest } from '../api';
 
 type FormInputs = {
     email: string;
@@ -14,12 +15,14 @@ type TState={
     email:string;
     password:string;
     showPassword:boolean;
+    isBusy:boolean;
 }
 
 const initialState:TState={
     email:"",
     password:"",
     showPassword:false,
+    isBusy:false,
 }
 
 function FormViewComponent(){
@@ -29,11 +32,23 @@ function FormViewComponent(){
         defaultValues: {},
     })
 
-    const onSubmit=useCallback(
-        (data:FormInputs) => {
+    const history = useHistory();
+
+    const onSubmit=(data:FormInputs) => {
            console.log(data);
-        },[]
-    )
+           setState({isBusy:true});
+           const requestModel:TApiLoginRequest={
+               email:data.email,
+               password:data.password
+           }
+           apiLogin(requestModel).then(res=>{
+               if(res.response){
+                   AuthStorage.setValue('token',res.response.data.access_token);
+                   history.push(UiRoutes.DashBoard)
+               }
+           })
+    }
+    
 
     const [state,setState]=useMultiState(initialState);
 
@@ -71,7 +86,7 @@ function FormViewComponent(){
                             onClick={tooglePassword} >{state.showPassword?"Hide":"Show"}</small> </p>
 
                         {!!errors.password && <p className="mt-0 text-danger">{errors.password.message}</p>}
-                        <Button className="mb-2" type="submit">Sign in</Button>
+                        <Button className="mb-2" type="submit" disabled={state.isBusy}>Sign in</Button>
                         <p><Link to={UiRoutes.ForgotPassword} >Forgot Password</Link></p>
                     </Form.Group>
                     <hr/>

@@ -11,7 +11,7 @@ function PrivateLayoutComponent() {
     return (
         <Suspense fallback={null}>
             <Switch>
-                <Route path={UiRoutes.Root} exact component={Dashboard} />
+                <Route path={UiRoutes.DashBoard} exact component={Dashboard} />
                 <Route path={UiRoutes.Saved} exact component={Saved} />
             </Switch>
         </Suspense>
