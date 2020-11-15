@@ -1,13 +1,15 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { UiRoutes } from '../../../lib';
+import { AuthStorage, UiRoutes } from '../../../lib';
+import { UnAuthenticatedLayout } from './unAuthenticatedLayout';
 
 const Dashboard = React.lazy(() => import('../../dashboard/dashboard'));
 const Saved = React.lazy(() => import('../../saved/Saved'));
 
 
-function PrivateLayoutComponent() {
+function AuthenticatedLayoutComponent() {
     console.log('rendering');
+    if(!AuthStorage.isLoggedIn) return <UnAuthenticatedLayout/>;
     return (
         <Suspense fallback={null}>
             <Switch>
@@ -18,4 +20,4 @@ function PrivateLayoutComponent() {
     )
 }
 
-export const PrivateLayout = React.memo(PrivateLayoutComponent);
+export const AuthenticatedLayout = React.memo(AuthenticatedLayoutComponent);

@@ -1,2 +1,3 @@
-export * from './privateLayout'
+export * from './authenticatedLayout'
+export * from './unAuthenticatedLayout'
 export * from './publicLayout'

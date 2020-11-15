@@ -7,6 +7,8 @@ export class UiRoutes{
     static Login = UiRoutes.Root;
     static ForgotPassword = UiRoutes.Login+"recover";
 
+    static ResetPassword = '/reset';
+
     static SingUp = '/signup'
 
     static Privacy = '/privacy';
@@ -15,6 +17,7 @@ export class UiRoutes{
 }
 
 export const API_BASE_URL = process.env.REACT_APP_BASE_URL || "http://[::1]:3000";
+
 export class ApiRoutes{
 
     private static Auth = API_BASE_URL+'/auth';

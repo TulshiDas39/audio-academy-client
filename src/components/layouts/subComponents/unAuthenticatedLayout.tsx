@@ -2,17 +2,17 @@ import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 
-const PrivacyPolicy = React.lazy(()=>import('../../privacyPolicy/privacyPolicy'));
+const Login = React.lazy(()=>import('../../login/login'));
 
-function PublicLayoutComponent(){
+function UnAuthenticatedLayoutComponent(){
     console.log('rendering');
     return (
         <Suspense fallback={null}>
             <Switch>
-                <Route path={UiRoutes.Privacy} exact component={PrivacyPolicy} />
+                <Route path={UiRoutes.Login} exact component={Login} />
             </Switch>
         </Suspense>
     )
 }
 
-export const PublicLayout = React.memo(PublicLayoutComponent);
+export const UnAuthenticatedLayout = React.memo(UnAuthenticatedLayoutComponent);
