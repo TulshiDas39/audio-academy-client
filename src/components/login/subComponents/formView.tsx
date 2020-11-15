@@ -5,6 +5,8 @@ import { Link, useHistory } from 'react-router-dom';
 import { AuthStorage, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { apiLogin, TApiLoginRequest } from '../api';
+import { useDispatch } from 'react-redux';
+import { ActionLogin } from '../reducer';
 
 type FormInputs = {
     email: string;
@@ -33,6 +35,7 @@ function FormViewComponent(){
     })
 
     const history = useHistory();
+    const dispath = useDispatch();
 
     const onSubmit=(data:FormInputs) => {
            console.log(data);
@@ -44,6 +47,7 @@ function FormViewComponent(){
            apiLogin(requestModel).then(res=>{
                if(res.response){
                    AuthStorage.setValue('token',res.response.data.access_token);
+                   dispath(ActionLogin.setLoginState(true));
                    history.push(UiRoutes.DashBoard)
                }
            })
