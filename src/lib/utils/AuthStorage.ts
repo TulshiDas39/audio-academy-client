@@ -1,9 +1,9 @@
 
-export type TAuthStorage={
-    token?:string;
+export interface IAuthStorage{
+    token:string;
 }
 
-type keys = keyof TAuthStorage;
+type keys = keyof IAuthStorage;
 
 export class AuthStorage{
     static getValue(key:keys){

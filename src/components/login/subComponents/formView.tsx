@@ -25,7 +25,7 @@ const initialState:TState={
 function FormViewComponent(){
     const { register,errors,handleSubmit } = useForm<FormInputs>({
         mode: 'onSubmit',
-        reValidateMode:"onSubmit",
+        reValidateMode:"onChange",
         defaultValues: {},
     })
 
@@ -63,11 +63,13 @@ function FormViewComponent(){
                             value={state.email} onChange={setInputValue} placeholder="Email" 
                             ref={register({required:"Email is required"})} />
                         <p className="text-danger"> {errors.email? errors.email.message:""}</p>
+
                         <Form.Control className="" type={state.showPassword?"text":"password"} 
                             name="password" placeholder="Password" value={state.password} onChange={setInputValue} 
                             ref={register({required:"Password is required",minLength:{value:5, message:"Password must be at least 5 character"},max:20})} />
                         <p className="text-right mb-0"> <small className="cur-point hover-primary" 
-                            onClick={tooglePassword} >Show</small> </p>
+                            onClick={tooglePassword} >{state.showPassword?"Hide":"Show"}</small> </p>
+
                         {!!errors.password && <p className="mt-0 text-danger">{errors.password.message}</p>}
                         <Button className="mb-2" type="submit">Sign in</Button>
                         <p><Link to={UiRoutes.ForgotPassword} >Forgot Password</Link></p>
