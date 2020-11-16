@@ -2,37 +2,28 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthStorage, UiRoutes, useMultiState } from '../../../lib';
+import { AuthStorage, EnumUserType, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
+import { IApiSignUpRequest } from '../typing/apiModels';
+import { apiSignUp } from '../api';
+import { ActionLogin } from '../../login/reducer';
 
-type FormInputs = {
-    email: string;
-    password: string;
-    name:string;
-    phone:string;
-  };
+interface IFormInputs extends IApiSignUpRequest{
+};
 
-type TState={
-    email:string;
-    password:string;
-    name:string;
-    phone:string;
+interface IState{
     showPassword:boolean;
     isBusy:boolean;
 }
 
-const initialState:TState={
-    email:"",
-    password:"",
-    name:"",
-    phone:"",
+const initialState:IState={
     showPassword:false,
     isBusy:false,
 }
 
 function FormViewComponent(){
-    const { register,errors,handleSubmit } = useForm<FormInputs>({
+    const { register,errors,handleSubmit } = useForm<IFormInputs>({
         mode: 'onSubmit',
         reValidateMode:"onChange",
         defaultValues: {},
@@ -41,20 +32,16 @@ function FormViewComponent(){
     const history = useHistory();
     const dispath = useDispatch();
 
-    const onSubmit=(data:FormInputs) => {
-           console.log(data);
+    const onSubmit=(data:IFormInputs) => {
            setState({isBusy:true});
-        //    const requestModel:TApiLoginRequest={
-        //        email:data.email,
-        //        password:data.password
-        //    }
-        //    apiLogin(requestModel).then(res=>{
-        //        if(res.response){
-        //            AuthStorage.setValue('token',res.response.data.access_token);
-        //            dispath(ActionLogin.setLoginState(true));
-        //            history.push(UiRoutes.DashBoard)
-        //        }
-        //    })
+           apiSignUp(data).then(res=>{
+               setState({isBusy:false});
+               if(res.response) {
+                   AuthStorage.setValue("token",res.response.data.access_token);
+                   dispath(ActionLogin.setLoginState(true));
+                   history.push(UiRoutes.DashBoard);
+                }
+           })       
     }
     
 
@@ -82,24 +69,46 @@ function FormViewComponent(){
                 </div>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group>
+
+                        <div className="text-center">
+                            <Form.Check
+                                type="radio"
+                                label="Student"
+                                name="type"
+                                value={EnumUserType.STUDENT}
+                                id="studentRadioButton"
+                                defaultChecked
+                                inline
+                                ref={register()}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="Instructor"
+                                name="type"
+                                value={EnumUserType.INSTRUCTOR}
+                                id="instructorRadioButton"
+                                inline
+                                ref={register()}
+                            />
+                        </div>
                         
                         <Form.Control className="mt-2" type="text" name="name" 
-                            value={state.name} onChange={setInputValue} placeholder="Full name" 
+                            onChange={setInputValue} placeholder="Full name" 
                             ref={register({required:"Name is required"})} />
                         <p className="text-danger"> {errors.name? errors.name.message:""}</p>
 
                         <Form.Control className="mt-2" type="email" name="email" 
-                            value={state.email} onChange={setInputValue} placeholder="Email" 
+                            onChange={setInputValue} placeholder="Email" 
                             ref={register({required:"Email is required"})} />
                         <p className="text-danger"> {errors.email? errors.email.message:""}</p>
 
                         <Form.Control className="mt-2" type="text" name="phone" 
-                            value={state.phone} onChange={setInputValue} placeholder="Phone number" 
+                            onChange={setInputValue} placeholder="Phone number" 
                             ref={register({required:"Phone number is required"})} />
                         <p className="text-danger"> {errors.phone? errors.phone.message:""}</p>
 
                         <Form.Control className="" type={state.showPassword?"text":"password"} 
-                            name="password" placeholder="Password" value={state.password} onChange={setInputValue} 
+                            name="password" placeholder="Password" onChange={setInputValue} 
                             ref={register({required:"Password is required",minLength:{value:5, message:"Password must be at least 5 character"},max:20})} />
                         <p className="text-right mb-0"> <small className="cur-point hover-primary" 
                             onClick={tooglePassword} >{state.showPassword?"Hide":"Show"}</small> </p>

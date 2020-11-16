@@ -22,4 +22,5 @@ export class ApiRoutes{
 
     private static Auth = API_BASE_URL+'/auth';
     static Login = ApiRoutes.Auth+'/login';
+    static Signup=ApiRoutes.Auth+'/signup';
 }
