@@ -5,7 +5,7 @@ import { AuthStorage, UiRoutes } from '../../../lib';
 import { ReduxState, useSelectorTyped } from '../../../store/rootReducer';
 import { UnAuthenticatedLayout } from './unAuthenticatedLayout';
 
-const Dashboard = React.lazy(() => import('../../dashboard/dashboard'));
+const Dashboard = React.lazy(() => import('../../contributorDashboard/contributorDashboard'));
 const Saved = React.lazy(() => import('../../saved/Saved'));
 
 
@@ -17,7 +17,7 @@ function AuthenticatedLayoutComponent() {
     return (
         <Suspense fallback={null}>
             <Switch>
-                <Route path={UiRoutes.DashBoard} exact component={Dashboard} />
+                <Route path={UiRoutes.ContributorDashBoard} exact component={Dashboard} />
                 <Route path={UiRoutes.Saved} exact component={Saved} />
             </Switch>
         </Suspense>

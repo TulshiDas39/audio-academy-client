@@ -39,7 +39,7 @@ function FormViewComponent(){
                if(res.response) {
                    AuthStorage.setValue("token",res.response.data.access_token);
                    dispath(ActionLogin.setLoginState(true));
-                   history.push(UiRoutes.DashBoard);
+                   history.push(UiRoutes.ContributorDashBoard);
                 }
            })       
     }
@@ -85,7 +85,7 @@ function FormViewComponent(){
                                 type="radio"
                                 label="Instructor"
                                 name="type"
-                                value={EnumUserType.INSTRUCTOR}
+                                value={EnumUserType.CONTRIBUTOR}
                                 id="instructorRadioButton"
                                 inline
                                 ref={register()}

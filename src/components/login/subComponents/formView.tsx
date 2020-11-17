@@ -48,7 +48,7 @@ function FormViewComponent(){
                if(res.response){
                    AuthStorage.setValue('token',res.response.data.access_token);
                    dispath(ActionLogin.setLoginState(true));
-                   history.push(UiRoutes.DashBoard)
+                   history.push(UiRoutes.ContributorDashBoard)
                }
            })
     }
