@@ -1,9 +1,11 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import {createSelectorHook} from 'react-redux';
 import { ReducerLogin } from '../components/login/reducer';
+import { ReducerApi } from './thunkReducer';
 
 const AppReducer = combineReducers({
-    login:ReducerLogin
+    login:ReducerLogin,
+    api:ReducerApi,
 });
 
 const AppResetActionType = 'app/ResetAllState';

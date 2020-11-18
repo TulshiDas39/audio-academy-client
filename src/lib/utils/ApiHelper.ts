@@ -1,3 +1,4 @@
+import { AxiosRequestConfig } from 'axios';
 import { UiRoutes } from '.';
 import { IAxiosErrorModel, IRequestFailedModel } from '../types';
 import { AuthStorage } from './AuthStorage';
@@ -10,7 +11,7 @@ export class ApiHelpers {
         }
     }
 
-    static getAuthorizedRequestConfig = () => {
+    static getAuthorizedRequestConfig = ():AxiosRequestConfig => {
         let token = AuthStorage.getValue("token");
         return {
             headers: {
