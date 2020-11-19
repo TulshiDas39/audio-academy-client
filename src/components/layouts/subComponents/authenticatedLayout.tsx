@@ -21,15 +21,6 @@ function AuthenticatedLayoutComponent() {
     if(!store.isLogin) return <UnAuthenticatedLayout/>;
     if(ThunkLogin.Profile.type === EnumUserType.CONTRIBUTOR) return <ContributorLayout />
     return null;
-
-    return (
-        <Suspense fallback={null}>
-            <Switch>
-                <Route path={UiRoutes.ContributorDashBoard} exact component={Dashboard} />
-                <Route path={UiRoutes.Saved} exact component={Saved} />
-            </Switch>
-        </Suspense>
-    )
 }
 
 export const AuthenticatedLayout = React.memo(AuthenticatedLayoutComponent);

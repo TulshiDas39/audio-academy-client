@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link, Redirect, useHistory } from 'react-router-dom';
-import { AuthStorage, UiRoutes, useMultiState } from '../../../lib';
+import { AuthStorage, EnumLocalStoreKey, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { apiLogin, TApiLoginRequest } from '../api';
 import { batch, useDispatch } from 'react-redux';
@@ -48,10 +48,11 @@ function FormViewComponent(){
                password:data.password
            }
            apiLogin(requestModel).then(res=>{
+               setState({isBusy:false});
                if(res.response){
-                   AuthStorage.setValue('token',res.response.data.access_token);
-                    dispath(ThunkLogin.GetProfile({updatedResponse:res.response.data.profile}))
-                    dispath(ActionLogin.setLoginState(true));                   
+                   AuthStorage.setValue(EnumLocalStoreKey.TOKEN, res.response.data.access_token);
+                   dispath(ThunkLogin.GetProfile({updatedResponse:res.response.data.profile}))
+                   dispath(ActionLogin.setLoginState(true));                   
                }
            })
     }

@@ -1,18 +1,29 @@
 
-export interface IAuthStorage{
-    token:string;
+export enum EnumLocalStoreKey{
+    TOKEN="token",
+    PROFILE="profile"
 }
 
-type keys = keyof IAuthStorage;
-
 export class AuthStorage{
-    static getValue(key:keys){
-        return localStorage[key];
+    static getValue<T=string>(key:EnumLocalStoreKey):T{
+        let value = localStorage[key];
+        return value?JSON.parse(value):null;
     }
-    static setValue(key:keys,value:string){
-        localStorage[key] = value;
+    static setValue(key:EnumLocalStoreKey,value:any){
+        localStorage[key] = JSON.stringify(value);
     }
+    static clearLoginData(){
+        localStorage.removeItem(EnumLocalStoreKey.PROFILE);
+        localStorage.removeItem(EnumLocalStoreKey.TOKEN);
+    }
+
     static get isLoggedIn(){
-        return !!this.getValue("token");
+        if( !!this.getValue(EnumLocalStoreKey.TOKEN) && !!this.getValue(EnumLocalStoreKey.PROFILE)){
+            return true
+        }
+        else{
+            this.clearLoginData();
+            return false;
+        }
     }
 }

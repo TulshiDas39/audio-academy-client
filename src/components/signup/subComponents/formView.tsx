@@ -2,7 +2,7 @@ import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
-import { AuthStorage, EnumUserType, UiRoutes, useMultiState } from '../../../lib';
+import { AuthStorage, EnumLocalStoreKey, EnumUserType, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { IApiSignUpRequest } from '../typing/apiModels';
@@ -37,7 +37,7 @@ function FormViewComponent(){
            apiSignUp(data).then(res=>{
                setState({isBusy:false});
                if(res.response) {
-                   AuthStorage.setValue("token",res.response.data.access_token);
+                   AuthStorage.setValue(EnumLocalStoreKey.TOKEN, res.response.data.access_token);
                    dispath(ActionLogin.setLoginState(true));
                    history.push(UiRoutes.ContributorDashBoard);
                 }

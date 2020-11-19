@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 import { UiRoutes } from '.';
 import { IAxiosErrorModel, IRequestFailedModel } from '../types';
-import { AuthStorage } from './AuthStorage';
+import { AuthStorage, EnumLocalStoreKey } from './AuthStorage';
 
 export class ApiHelpers {
 
@@ -12,7 +12,7 @@ export class ApiHelpers {
     }
 
     static getAuthorizedRequestConfig = ():AxiosRequestConfig => {
-        let token = AuthStorage.getValue("token");
+        let token = AuthStorage.getValue(EnumLocalStoreKey.TOKEN);
         return {
             headers: {
                 'Content-Type': 'application/json',
