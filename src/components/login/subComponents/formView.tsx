@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { AuthStorage, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { apiLogin, TApiLoginRequest } from '../api';
-import { useDispatch } from 'react-redux';
+import { batch, useDispatch } from 'react-redux';
 import { ActionLogin } from '../reducer';
+import { ThunkLogin } from '../thunk';
 
 type FormInputs = {
     email: string;
@@ -18,6 +19,7 @@ type TState={
     password:string;
     showPassword:boolean;
     isBusy:boolean;
+    loginSuccess:boolean;
 }
 
 const initialState:TState={
@@ -25,6 +27,7 @@ const initialState:TState={
     password:"",
     showPassword:false,
     isBusy:false,
+    loginSuccess:false,
 }
 
 function FormViewComponent(){
@@ -47,8 +50,8 @@ function FormViewComponent(){
            apiLogin(requestModel).then(res=>{
                if(res.response){
                    AuthStorage.setValue('token',res.response.data.access_token);
-                   dispath(ActionLogin.setLoginState(true));
-                   history.push(UiRoutes.ContributorDashBoard)
+                    dispath(ThunkLogin.GetProfile({updatedResponse:res.response.data.profile}))
+                    dispath(ActionLogin.setLoginState(true));                   
                }
            })
     }
@@ -67,7 +70,7 @@ function FormViewComponent(){
         (e:ChangeEvent<HTMLInputElement>) => {
            setState({[e.target.name]:e.target.value});
         },
-        [state.showPassword]
+        []
     )
 
     return (

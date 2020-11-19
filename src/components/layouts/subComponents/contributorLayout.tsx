@@ -5,6 +5,8 @@ import { ContributorLeftNav } from '../../common/leftNav';
 import { ContributorTopNav } from '../../common/topNav';
 
 const ContributorDashboard = React.lazy(() => import('../../contributorDashboard/contributorDashboard'));
+const Saved = React.lazy(() => import('../../saved/Saved'));
+
 
 function ContributorLayoutComponent() {
     return (
@@ -17,7 +19,8 @@ function ContributorLayoutComponent() {
                 <div className="col-9">
                     <Suspense fallback={null}>
                         <Switch>
-                            <Route path={UiRoutes.ContributorDashBoard} component={ContributorDashboard} />
+                            <Route path={UiRoutes.ContributorDashBoard} exact component={ContributorDashboard} />
+                            <Route path={UiRoutes.Saved} exact component={Saved} />
                         </Switch>
                     </Suspense>
                 </div>
@@ -27,4 +30,4 @@ function ContributorLayoutComponent() {
     )
 }
 
-const ContributorLayout = React.memo(ContributorLayoutComponent);
+export const ContributorLayout = React.memo(ContributorLayoutComponent);

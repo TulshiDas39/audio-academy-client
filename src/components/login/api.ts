@@ -1,4 +1,5 @@
 import { ApiRoutes } from "../../lib"
+import { IEntityUser } from "../../lib/types/entities";
 import { Intercept } from "../../lib/utils/interceptor"
 
 export type TApiLoginRequest={
@@ -7,6 +8,7 @@ export type TApiLoginRequest={
 }
 export type TApiLoginResponse={
     access_token:string;
+    profile:IEntityUser;
 }
 export function apiLogin(requestModel:TApiLoginRequest){
     return Intercept.post<TApiLoginResponse>(ApiRoutes.Login,requestModel);

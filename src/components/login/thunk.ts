@@ -3,18 +3,18 @@ import { ApiRoutes, IThunkParam } from '../../lib';
 import {IEntityUser} from '../../lib/types/entities'
 import { Intercept } from '../../lib/utils/interceptor';
 export class ThunkLogin{
-    private static responseData:IEntityUser;
+    private static GetProfileResponse:IEntityUser;
 
-    static get response(){
-      return ThunkLogin.responseData;
+    static get Profile(){
+      return ThunkLogin.GetProfileResponse;
     }
     
-    static thunk = createAsyncThunk(
+    static GetProfile = createAsyncThunk(
         ApiRoutes.MyProfile,
         async (param?:IThunkParam<void,IEntityUser>) => {
           if(param?.updatedResponse) return param.updatedResponse;
           const result = await Intercept.get<IEntityUser>(ApiRoutes.MyProfile)
-          result.response?.data && (ThunkLogin.responseData = ThunkLogin.responseData);
+          result.response?.data && (ThunkLogin.GetProfileResponse = ThunkLogin.GetProfileResponse);
         }
     )
 
