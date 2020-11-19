@@ -3,7 +3,7 @@ import { ApiRoutes, AuthStorage, EnumLocalStoreKey, IThunkParam } from '../../li
 import {IEntityUser} from '../../lib/types/entities'
 import { Intercept } from '../../lib/utils/interceptor';
 export class ThunkLogin{
-    private static GetProfileResponse:IEntityUser;
+    private static GetProfileResponse:IEntityUser = AuthStorage.getValue(EnumLocalStoreKey.PROFILE);
 
     static get Profile(){
       return ThunkLogin.GetProfileResponse;

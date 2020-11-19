@@ -1,9 +1,11 @@
 import React from 'react';
+import './contributorLeftNav.scss';
 
 function ContributorLeftNavComponent(){
     return (
-        <div className="w-100">
-            Contributor Left nav
+        <div className="contributorLeftNav">
+            <div>Queue</div>
+            <div>Submitted</div>
         </div>
     )
 }
