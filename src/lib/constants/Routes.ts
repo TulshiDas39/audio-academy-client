@@ -13,7 +13,8 @@ export class UiRoutes{
 
     static Privacy = '/privacy';
 
-    static Saved = '/saved';
+    static Submitted = '/submitted';
+    static Confirmed = '/confirmed';
 }
 
 export const API_BASE_URL = process.env.REACT_APP_BASE_URL || "http://[::1]:3000";

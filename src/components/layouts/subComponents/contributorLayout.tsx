@@ -23,7 +23,7 @@ function ContributorLayoutComponent() {
                         <Suspense fallback={null}>
                             <Switch>
                                 <Route path={UiRoutes.ContributorDashBoard} exact component={ContributorDashboard} />
-                                <Route path={UiRoutes.Saved} exact component={Saved} />
+                                <Route path={UiRoutes.Submitted} exact component={Saved} />
                             </Switch>
                         </Suspense>
                     </div>

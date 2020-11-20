@@ -1,6 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import {createSelectorHook} from 'react-redux';
 import { ReducerLogin } from '../components/login/reducer';
+import { AuthStorage } from '../lib';
 import { ReducerApi } from './thunkReducer';
 
 const AppReducer = combineReducers({
@@ -9,10 +10,11 @@ const AppReducer = combineReducers({
 });
 
 const AppResetActionType = 'app/ResetAllState';
-export const ActionP1stonAppReset = (): { type: string } => ({ type: AppResetActionType });
+export const ActionAppReset = (): { type: string } => ({ type: AppResetActionType });
 
 export const RootReducer: (...param: Parameters<typeof AppReducer>) => ReturnType<typeof AppReducer> = (state, action) => {
   if (action.type === AppResetActionType) {
+    AuthStorage.clearLoginData();
     state = undefined;
   }
   return AppReducer(state, action);
