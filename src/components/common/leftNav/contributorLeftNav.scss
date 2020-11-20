@@ -1,3 +1,16 @@
 .contributorLeftNav{
-    width: 100%;   
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: rgb(211, 209, 207);
+    & > *{
+        padding: 1rem 0.2rem;
+    }
+    & > *:hover{
+        cursor: pointer;
+        text-decoration: none;
+    }
+    & > .active{
+        background: white;
+    }
 }

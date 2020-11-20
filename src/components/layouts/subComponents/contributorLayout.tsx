@@ -10,23 +10,26 @@ const Saved = React.lazy(() => import('../../saved/Saved'));
 
 function ContributorLayoutComponent() {
     return (
-        <Fragment>
-            <ContributorTopNav />
-            <div className="row">
-                <div className="col-3">
-                    <ContributorLeftNav />
-                </div>
-                <div className="col-9">
-                    <Suspense fallback={null}>
-                        <Switch>
-                            <Route path={UiRoutes.ContributorDashBoard} exact component={ContributorDashboard} />
-                            <Route path={UiRoutes.Saved} exact component={Saved} />
-                        </Switch>
-                    </Suspense>
+        <div className="h-100 d-flex flex-column">
+            <div className="flex-shrink-0">
+                <ContributorTopNav />
+            </div>
+            <div className="flex-grow-1">
+                <div className="row mx-0 h-100">
+                    <div className="col-auto px-0">
+                        <ContributorLeftNav />
+                    </div>
+                    <div className="col">
+                        <Suspense fallback={null}>
+                            <Switch>
+                                <Route path={UiRoutes.ContributorDashBoard} exact component={ContributorDashboard} />
+                                <Route path={UiRoutes.Saved} exact component={Saved} />
+                            </Switch>
+                        </Suspense>
+                    </div>
                 </div>
             </div>
-
-        </Fragment>
+        </div>
     )
 }
 

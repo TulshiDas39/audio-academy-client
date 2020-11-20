@@ -6,10 +6,10 @@ import './contributorTopNav.scss';
 
 function ContributorTopNavComponent(){
     return (
-        <div className="contributorTopNav bg-success row align-items-center">
+        <div className="contributorTopNav bg-success row mx-0 align-items-center">
             <div className="col-auto">
-                <Link to={UiRoutes.ContributorDashBoard} className="text-white">
-                    <FaHeadphones />
+                <Link to={UiRoutes.ContributorDashBoard} className="text-white hover-no-underline">
+                    <FaHeadphones className="h6 mr-1" />
                     <span className="h5">{Constants.SiteName}</span>
                 </Link>
             </div>
