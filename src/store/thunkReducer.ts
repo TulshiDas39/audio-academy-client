@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
+import { ThunkContributorDashboard } from "../components/contributorDashboard/thunk";
 import { ThunkLogin } from "../components/login/thunk";
 import { createReducerFromThunk } from "../lib";
 
 export const ReducerApi = combineReducers({
-    profile:createReducerFromThunk(ThunkLogin.GetProfile)
+    getProfile:createReducerFromThunk(ThunkLogin.GetProfile),
+    getAssignedClips:createReducerFromThunk(ThunkContributorDashboard.GetAssignedClip),
 })

@@ -27,4 +27,7 @@ export class ApiRoutes{
 
     private static User = API_BASE_URL+'/user';
     static MyProfile = ApiRoutes.User;
+
+    static Clip = API_BASE_URL+'/clip';
+    static AssignedClip = ApiRoutes.Clip+'/assigned';
 }

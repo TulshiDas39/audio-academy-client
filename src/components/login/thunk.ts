@@ -15,6 +15,7 @@ export class ThunkLogin{
           if(param?.updatedResponse) {
             AuthStorage.setValue(EnumLocalStoreKey.PROFILE,param.updatedResponse);
             ThunkLogin.GetProfileResponse = param.updatedResponse;
+            return;
           }
           const result = await Intercept.get<IEntityUser>(ApiRoutes.MyProfile)
           result.response?.data && (ThunkLogin.GetProfileResponse = ThunkLogin.GetProfileResponse);

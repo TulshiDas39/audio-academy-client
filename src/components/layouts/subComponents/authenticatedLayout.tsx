@@ -14,7 +14,7 @@ const Saved = React.lazy(() => import('../../saved/Saved'));
 function AuthenticatedLayoutComponent() {
     const store = useSelectorTyped((state)=> ({
         isLogin: state.login.isLoggedIn,
-        apiProfileVersion:state.api.profile.version
+        apiProfileVersion:state.api.getProfile.version
     }))
     console.log('rendering');
     console.log(store);
