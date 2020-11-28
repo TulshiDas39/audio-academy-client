@@ -5,5 +5,5 @@ import { createReducerFromThunk } from "../lib";
 
 export const ReducerApi = combineReducers({
     getProfile:createReducerFromThunk(ThunkLogin.GetProfile),
-    getAssignedClips:createReducerFromThunk(ThunkContributorDashboard.GetAssignedClip),
+    getAllClips:createReducerFromThunk(ThunkContributorDashboard.GetAllClip),
 })

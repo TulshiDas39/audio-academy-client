@@ -4,19 +4,19 @@ import { IClipEntity } from "../../lib/types/entities";
 import { Intercept } from "../../lib/utils/interceptor";
 
 export class ThunkContributorDashboard{
-    private static assignedClips:IClipEntity[]=[];
-    static get AssignedClips(){
-        return ThunkContributorDashboard.assignedClips;
+    private static allClips:IClipEntity[]=[];
+    static get AllClips(){
+        return ThunkContributorDashboard.allClips;
     }
-    static GetAssignedClip = createAsyncThunk(
+    static GetAllClip = createAsyncThunk(
         ApiRoutes.AssignedClip,
         async (param?:IThunkParam<null,IClipEntity[]>) => {
           if(param?.updatedResponse) {
-            ThunkContributorDashboard.assignedClips = param.updatedResponse;
+            ThunkContributorDashboard.allClips = param.updatedResponse;
             return;
           }
-          const result = await Intercept.get<IClipEntity[]>(ApiRoutes.AssignedClip);
-          if(result.response) ThunkContributorDashboard.assignedClips = result.response.data;
+          const result = await Intercept.get<IClipEntity[]>(ApiRoutes.Clip);
+          if(result.response) ThunkContributorDashboard.allClips = result.response.data;
         }
     )
 }

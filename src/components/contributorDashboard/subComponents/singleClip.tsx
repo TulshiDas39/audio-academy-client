@@ -4,6 +4,7 @@ import moment from 'moment';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { useMultiState } from '../../../lib';
 import { Button } from 'react-bootstrap';
+import { apiSubClip } from '../api';
 
 interface IProps{
     clip:IClipEntity;
@@ -16,7 +17,11 @@ function SingleClipComponent(props:IProps){
     const [state,setState]=useMultiState(initialState);
 
     const handleSubmit = ()=>{
-        
+        if(!state.file) return;
+        apiSubClip({
+            clipId:props.clip._id,
+            file:state.file,
+        });
     }
 
     return (

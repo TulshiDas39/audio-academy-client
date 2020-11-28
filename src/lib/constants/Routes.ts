@@ -30,4 +30,7 @@ export class ApiRoutes{
 
     static Clip = API_BASE_URL+'/clip';
     static AssignedClip = ApiRoutes.Clip+'/assigned';
+    static SubmittedClip = ApiRoutes.Clip+'/submitted';
+
+    static SubmitClip = ApiRoutes.Clip+'/submit';
 }

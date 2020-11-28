@@ -2,4 +2,9 @@
     .singleClip{
         max-height: 300px;
     }
+    .clip-nav{
+        .active{
+            border-bottom: 1px solid var(--primary);
+        }
+    }
 }
