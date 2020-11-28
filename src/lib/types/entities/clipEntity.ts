@@ -12,4 +12,6 @@ export interface IClipEntity extends IEntityBase{
   contributorId:string;
 
   audioFilePath:string;
+
+  description: string;
 }
