@@ -1,14 +1,15 @@
-import React, { Fragment, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
+// import AdminDashboard from '../../adminDashboard/adminDashboard';
 import { ContributorLeftNav } from '../../common/leftNav';
 import { TopNav } from '../../common/topNav';
 
-const ContributorDashboard = React.lazy(() => import('../../contributorDashboard/contributorDashboard'));
+const AdminDashboard = React.lazy(() => import('../../adminDashboard/adminDashboard'));
 const Saved = React.lazy(() => import('../../saved/Saved'));
 
 
-function ContributorLayoutComponent() {
+function AdminLayoutComponent() {
     return (
         <div className="h-100 d-flex flex-column">
             <div className="flex-shrink-0">
@@ -22,7 +23,7 @@ function ContributorLayoutComponent() {
                     <div className="col">
                         <Suspense fallback={null}>
                             <Switch>
-                                <Route path={UiRoutes.ContributorDashBoard} exact component={ContributorDashboard} />
+                                <Route path={UiRoutes.ContributorDashBoard} exact component={AdminDashboard} />
                                 <Route path={UiRoutes.Submitted} exact component={Saved} />
                             </Switch>
                         </Suspense>
@@ -33,4 +34,4 @@ function ContributorLayoutComponent() {
     )
 }
 
-export const ContributorLayout = React.memo(ContributorLayoutComponent);
+export const AdminLayout = React.memo(AdminLayoutComponent);

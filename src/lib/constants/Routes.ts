@@ -3,6 +3,7 @@ export class UiRoutes{
     static Root='/';
 
     static ContributorDashBoard = UiRoutes.Root;
+    static AdminDashBoard = UiRoutes.Root;
 
     static Login = UiRoutes.Root;
     static ForgotPassword = UiRoutes.Login+"recover";

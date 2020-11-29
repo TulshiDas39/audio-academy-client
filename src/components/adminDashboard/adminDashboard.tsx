@@ -1,5 +1,5 @@
 import React from 'react';
-import './constributorDashboard.scss';
+import './adminDashboard.scss';
 import { useMultiState } from '../../lib';
 import { AssignedClips, SubmittedClips } from './subComponents';
 
@@ -10,10 +10,10 @@ const initialState:IState={
     selectedTab:"Assigned",
 }
 
-function ContributorDashboardComponent(){
+function AdminDashboardComponent(){
     const [state,setState] = useMultiState(initialState);
 
-    return (<div className="contributorDashboard">
+    return (<div className="adminDashboard">
         <div className="row border-bottom clip-nav">
             <div className={`col-auto border-right cur-point p-2 ${state.selectedTab === 'Assigned'?'active':''}`} onClick={()=>setState({selectedTab:'Assigned'})}>
                 <span>Assigned</span>
@@ -28,6 +28,6 @@ function ContributorDashboardComponent(){
     </div>)
 }
 
-const ContributorDashboard = React.memo(ContributorDashboardComponent);
+const AdminDashboard = React.memo(AdminDashboardComponent);
 
-export default ContributorDashboard;
+export default AdminDashboard;

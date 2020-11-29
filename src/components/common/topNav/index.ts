@@ -1,1 +1,1 @@
-export * from './contributorTopNav';
+export * from './TopNav';

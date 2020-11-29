@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ContributorClip } from '../../contributorClip';
-import { ThunkContributorDashboard } from '../thunk';
+import { AdminClip } from '../../adminClip';
+import { CommonThunk } from '../../common/thunk';
 
 
 function AssignedClipsComponent(){
@@ -11,15 +11,15 @@ function AssignedClipsComponent(){
         getAllClips:state.api.getAllClips   
     }))
     useEffect(()=>{
-        dispatch(ThunkContributorDashboard.GetAllClip());
+        dispatch(CommonThunk.GetAllClip());
     },[])
     const clips = React.useMemo(()=>{
-        return ThunkContributorDashboard.AllClips.filter(clip => !clip.submissionDate);
+        return CommonThunk.AllClips.filter(clip => !clip.submissionDate);
     },[store.getAllClips.version]);
     return(
     <div>
         {clips.map(clip=>(
-            <ContributorClip key={clip._id} clip={clip} />
+            <AdminClip key={clip._id} clip={clip} />
         ))}
     </div>
     )

@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
-import { IClipEntity } from '../../../lib/types/entities';
+import React from 'react';
 import moment from 'moment';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import { useMultiState } from '../../../lib';
+import { IClipEntity } from '../../lib/types/entities';
+import { useMultiState } from '../../lib';
+import { apiSubmitClip } from '.';
 import { Button } from 'react-bootstrap';
-import { apiSubClip } from '../api';
+import './contributorClip.scss';
 
 interface IProps{
     clip:IClipEntity;
@@ -13,19 +14,19 @@ interface IState{
     file?: File
 }
 const initialState = {} as IState;
-function SingleClipComponent(props:IProps){
+function ContributorClipComponent(props:IProps){
     const [state,setState]=useMultiState(initialState);
 
     const handleSubmit = ()=>{
         if(!state.file) return;
-        apiSubClip({
+        apiSubmitClip({
             clipId:props.clip._id,
             file:state.file,
         });
     }
 
     return (
-        <div className="singleClip border text-center row">
+        <div className="contributorClip border text-center row">
             <div className="col border">
                 <h5 className="">{props.clip.title}</h5>
                 <p className="text-secondary">Lession:{props.clip.lession}</p>
@@ -50,4 +51,4 @@ function SingleClipComponent(props:IProps){
     )
 }
 
-export const SingleClip = React.memo(SingleClipComponent);
+export const ContributorClip = React.memo(ContributorClipComponent);
