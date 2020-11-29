@@ -4,7 +4,7 @@ import { FaHeadphones, FaUserCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Constants, UiRoutes } from '../../../lib';
-import { ActionAppLogout } from '../../../store/rootReducer';
+import { ActionAppReset } from '../../../store/rootReducer';
 import './contributorTopNav.scss';
 
 const CustomToggle = React.forwardRef<HTMLSpanElement,any>(({onClick}, ref) => (
@@ -18,7 +18,7 @@ function ContributorTopNavComponent(){
     const dispatch = useDispatch();
 
     const handleLogout=()=>{
-        dispatch(ActionAppLogout())
+        dispatch(ActionAppReset())
     }
 
     return (

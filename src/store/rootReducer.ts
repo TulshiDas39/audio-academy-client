@@ -9,11 +9,11 @@ const AppReducer = combineReducers({
     api:ReducerApi,
 });
 
-const AppLogoutActionType = 'app/Logout';
-export const ActionAppLogout = (): { type: string } => ({ type: AppLogoutActionType });
+const AppResetActionType = 'app/Reset';
+export const ActionAppReset = (): { type: string } => ({ type: AppResetActionType });
 
 export const RootReducer: (...param: Parameters<typeof AppReducer>) => ReturnType<typeof AppReducer> = (state, action) => {
-  if (action.type === AppLogoutActionType) {
+  if (action.type === AppResetActionType) {
     AuthStorage.clearLoginData();
     state = undefined;
   }

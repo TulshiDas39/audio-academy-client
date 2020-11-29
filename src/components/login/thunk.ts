@@ -1,7 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { batch } from 'react-redux';
 import { ApiRoutes, AuthStorage, EnumLocalStoreKey, IThunkParam } from '../../lib';
 import {IEntityUser} from '../../lib/types/entities'
 import { Intercept } from '../../lib/utils/interceptor';
+import { ActionAppReset } from '../../store/rootReducer';
+import { ActionLogin } from './reducer';
 export class ThunkLogin{
     private static GetProfileResponse:IEntityUser = AuthStorage.getValue(EnumLocalStoreKey.PROFILE);
 
@@ -21,5 +24,13 @@ export class ThunkLogin{
           result.response?.data && (ThunkLogin.GetProfileResponse = ThunkLogin.GetProfileResponse);
         }
     )
+
+    static Logout= createAsyncThunk('app/logout',
+      async (_,thunkApi)=>{
+        batch(()=>{
+          thunkApi.dispatch(ActionAppReset())
+          thunkApi.dispatch(ActionLogin.setLoginState(false));
+        })
+    })
 
 }
