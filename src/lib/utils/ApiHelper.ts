@@ -29,7 +29,11 @@ export class ApiHelpers {
         }
 
         if (errorData?.statusCode === 401) {
-            if(AuthStorage.getValue(EnumLocalStoreKey.TOKEN)) AuthStorage.clearLoginData();
+            if(AuthStorage.getValue(EnumLocalStoreKey.TOKEN)) {
+                AuthStorage.clearLoginData();
+                window.location.pathname = UiRoutes.Login;
+
+            }
             if (window.location.pathname !== UiRoutes.Login) {
                 window.location.pathname = UiRoutes.Login;
             }

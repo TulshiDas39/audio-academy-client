@@ -26,13 +26,13 @@ function SingleClipComponent(props:IProps){
 
     return (
         <div className="singleClip border text-center row">
-            <div className="col-8 border">
+            <div className="col border">
                 <h5 className="">{props.clip.title}</h5>
-                <p className="">Lession:{props.clip.lession}</p>
-                <p className="text-primary">Description: {props.clip.description}</p>
-                <p>Assigned: {moment(props.clip.createdAt).format('DD-MM-YYYY')}</p>
+                <p className="text-secondary">Lession:{props.clip.lession}</p>
+                <p className="text-success">Description: {props.clip.description}</p>
+                <p>{props.clip.submissionDate ? `Submitted: ${moment(props.clip.submissionDate).format('DD MMM, YYYY')}`:`Assigned: ${moment(props.clip.createdAt).format('DD MMM, YYYY')}`}</p>
             </div>
-            <div className="col-4 d-flex justify-content-center flex-column">
+            {!props.clip.submissionDate && <div className="col-auto d-flex justify-content-center flex-column px-5">
                 {!state.file && <label htmlFor="upload-file">
                     <FaCloudUploadAlt title="Upload file" className="text-info display-1 cur-point my-auto" />
                 </label>} 
@@ -45,7 +45,7 @@ function SingleClipComponent(props:IProps){
                     !! state.file && <Button className="w-25 mx-auto" onClick={handleSubmit}>Submit</Button>
                 }
                 
-            </div>
+            </div>}
         </div>
     )
 }
