@@ -1,11 +1,13 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import {createSelectorHook} from 'react-redux';
+import { ReducersModals } from '../components/common/modals';
 import { ReducerLogin } from '../components/login/reducer';
 import { AuthStorage } from '../lib';
 import { ReducerApi } from './thunkReducer';
 
 const AppReducer = combineReducers({
     login:ReducerLogin,
+    modals: ReducersModals,
     api:ReducerApi,
 });
 

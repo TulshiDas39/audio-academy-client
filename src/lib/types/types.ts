@@ -12,3 +12,7 @@ export interface IThunkParam<TRequest=undefined,TResponse=undefined>{
     requestModel?:TRequest;
     updatedResponse?:TResponse;
 }
+
+export enum EnumModals{
+    REGISTER_CONTRIBUTOR = 'REGISTER_CONTRIBUTOR',
+}
