@@ -11,3 +11,16 @@ export interface ICreateContributorPayload{
 export function ApiCreateContributor(payload:ICreateContributorPayload){
     return Intercept.post<boolean>(ApiRoutes.CreateContributor,payload)
 }
+
+export interface ICreateClipPayload{
+    title: string;
+    description: string;
+    tutorialId: string;
+    lession: string;
+    deadline?:string;
+    contributorId?:string;
+    images?:string[];
+}
+export function ApiCreateClip(payload:ICreateClipPayload){
+    return Intercept.post(ApiRoutes.Clip,payload);
+}

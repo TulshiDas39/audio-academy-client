@@ -8,7 +8,8 @@ function ActivityComponent(){
     const dispatch = useDispatch();
     return (
         <div className="d-flex align-items-center mt-2">
-            <Button className="mx-auto" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.REGISTER_CONTRIBUTOR))}>Register Contributor</Button>
+            <Button className="mr-2" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.REGISTER_CONTRIBUTOR))}>Register Contributor</Button>
+            <Button className="" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Create Clip</Button>
         </div>
     )
 }

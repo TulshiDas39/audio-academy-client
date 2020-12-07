@@ -15,4 +15,5 @@ export interface IThunkParam<TRequest=undefined,TResponse=undefined>{
 
 export enum EnumModals{
     REGISTER_CONTRIBUTOR = 'REGISTER_CONTRIBUTOR',
+    CREATE_CLIP = 'CREATE_CLIP',
 }
