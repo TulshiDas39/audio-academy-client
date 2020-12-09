@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { EnumModals, useMultiState } from '../../../lib';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ApiCreateClip, ApiCreateContributor, ICreateClipPayload, ICreateContributorPayload } from './api';
+import { ApiCreateTutorial, ApiCreateContributor, ICreateTutorialPayload, ICreateContributorPayload } from './api';
 import { ActionsModal } from './reducers';
 
-interface IFormData extends ICreateClipPayload{
+interface IFormData extends ICreateTutorialPayload{
     
 }
 
@@ -16,10 +16,10 @@ interface IState{
 
 const initialState={} as IState;
 
-function CreateClipModalComponent(){
+function CreateTutorialModalComponent(){
     const dispatch = useDispatch();
     const store = useSelectorTyped((state)=>({
-        show: state.modals.openModals.includes(EnumModals.CREATE_CLIP),
+        show: state.modals.openModals.includes(EnumModals.CREATE_TUTORIAL),
     }))
 
     const [state,setState]= useMultiState(initialState);
@@ -30,11 +30,11 @@ function CreateClipModalComponent(){
     })
     
     const onClose=()=>{
-      dispatch(ActionsModal.hideModal(EnumModals.CREATE_CLIP));
+      dispatch(ActionsModal.hideModal(EnumModals.CREATE_TUTORIAL));
     }
 
     const onSubmit=(data: IFormData)=>{
-      ApiCreateClip(data).then(res=>{
+      ApiCreateTutorial(data).then(res=>{
         if(res.response){
           onClose();
         }
@@ -49,28 +49,26 @@ function CreateClipModalComponent(){
         show = {store.show}
     >
       <Modal.Header closeButton onHide={onClose}>
-        <p>Create Clip</p>
+        <p>Create Tutorial</p>
       </Modal.Header>
       <Modal.Body>
-        <Form id="registerContributorForm" onSubmit={handleSubmit(onSubmit)}>
+        <Form id="registerTutorialForm" onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
               <Form.Control name="title" type="text" placeholder="Title" ref={register({required:"Title is required"})}/>
               <p className="text-danger">{errors.title?.message || ''}</p>
-              <Form.Control name="lession" type="text" placeholder="Lesson" ref={register({required:"Lesson is required"})}/>
-              <p className="text-danger">{errors.lession?.message || ''}</p>
-              <Form.Control name="description" type="textarea" placeholder="Description" as={"textarea"} rows={3} ref={register({required:"Description is required"})}/>
-              <p className="text-danger">{errors.description?.message || ''}</p>
-              <Form.Control name="deadline" type={"text"} placeholder="Deadline for contributor" ref={register({required:"Deadline is required"})}/>
-              <p className="text-danger">{errors.deadline?.message || ''}</p>
+              <Form.Control name="bookId" type="text" placeholder="Description" ref={register({required:"Description is required"})}/>
+              <p className="text-danger">{errors.bookId?.message || ''}</p>
+              <Form.Control name="bookEdition" type={"text"} placeholder="BookEdition for contributor" ref={register({required:"BookEdition is required"})}/>
+              <p className="text-danger">{errors.bookEdition?.message || ''}</p>
             </Form.Group>
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" type="submit" form={"registerContributorForm"}>Submit</Button>
+        <Button variant="success" type="submit" form={"registerTutorialForm"}>Submit</Button>
         <Button variant="danger" onClick={onClose} >Close</Button>
       </Modal.Footer>
     </Modal>
     )
 }
 
-export const CreateClipModal = React.memo(CreateClipModalComponent);
+export const CreateTutorialModal = React.memo(CreateTutorialModalComponent);

@@ -24,3 +24,12 @@ export interface ICreateClipPayload{
 export function ApiCreateClip(payload:ICreateClipPayload){
     return Intercept.post(ApiRoutes.Clip,payload);
 }
+
+export interface ICreateTutorialPayload{
+    title?: string;
+    bookId: string;
+    bookEdition: string;
+}
+export function ApiCreateTutorial(payload:ICreateTutorialPayload){
+    return Intercept.post(ApiRoutes.Tutorial,payload);
+}
