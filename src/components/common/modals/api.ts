@@ -33,3 +33,13 @@ export interface ICreateTutorialPayload{
 export function ApiCreateTutorial(payload:ICreateTutorialPayload){
     return Intercept.post(ApiRoutes.Tutorial,payload);
 }
+
+export interface ICreateBookPayload{
+    name: string;
+    writers: string[];
+    level: string;
+    editions:string[];
+}
+export function ApiCreateBook(payload:ICreateBookPayload){
+    return Intercept.post(ApiRoutes.Book,payload);
+}

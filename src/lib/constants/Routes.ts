@@ -40,4 +40,6 @@ export class ApiRoutes{
 
     static Tutorial = API_BASE_URL+"/tutorial";
     static CreateTutorial = ApiRoutes.Tutorial+"/create";
+
+    static Book = API_BASE_URL+'/book';
 }

@@ -11,6 +11,7 @@ function ActivityComponent(){
             <Button className="mr-2" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.REGISTER_CONTRIBUTOR))}>Register Contributor</Button>
             <Button className="mr-2" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Create Clip</Button>
             <Button className="mr-2" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.CREATE_TUTORIAL))}>Create Tutorial</Button>
+            <Button className="mr-2" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.CREATE_BOOK))}>Create Book</Button>
         </div>
     )
 }

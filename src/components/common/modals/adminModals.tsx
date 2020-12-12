@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { CreateBookModal } from './createBookModal';
 import { CreateClipModal } from './createClipModal';
 import { CreateTutorialModal } from './createTutorialModal';
 import { RegisterContributorModal } from './registerContributorModal';
@@ -9,6 +10,7 @@ function AdminModalsComponent(){
             <RegisterContributorModal />
             <CreateClipModal />
             <CreateTutorialModal />
+            <CreateBookModal />
         </Fragment>
     )
 }
