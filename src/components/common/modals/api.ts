@@ -1,4 +1,6 @@
 import { ApiRoutes } from "../../../lib";
+import { IEntityBook } from "../../../lib/types/entities";
+import { ISearchModel } from "../../../lib/types/models";
 import { Intercept } from "../../../lib/utils/interceptor";
 
 export interface ICreateContributorPayload{
@@ -26,7 +28,8 @@ export function ApiCreateClip(payload:ICreateClipPayload){
 }
 
 export interface ICreateTutorialPayload{
-    title?: string;
+    title: string;
+    description?:string;
     bookId: string;
     bookEdition: string;
 }
@@ -42,4 +45,8 @@ export interface ICreateBookPayload{
 }
 export function ApiCreateBook(payload:ICreateBookPayload){
     return Intercept.post(ApiRoutes.Book,payload);
+}
+
+export function ApiSearchBook(query:ISearchModel){
+    return Intercept.get<IEntityBook[]>(`${ApiRoutes.BookSearch}?keyword=${query.keyword}` )
 }
