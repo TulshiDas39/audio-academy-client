@@ -17,14 +17,14 @@ interface IState{
   bookName:string;
   selectedBook:IEntityBook;
   bookSuggestions: IEntityBook[];
-  selectedBookEdiion:string;
+  selectedBookEdition:string;
 }
 
 const initialState={
   bookName:"",
   selectedBook:null!,
   bookSuggestions:[],
-  selectedBookEdiion:"",
+  selectedBookEdition:"",
 
 } as IState;
 let preventBlur = false;
@@ -54,7 +54,7 @@ function CreateTutorialModalComponent(){
       const payload:ICreateTutorialPayload={
         title:data.title,
         description:data.description,
-        bookEdition:state.selectedBookEdiion,
+        bookEdition:state.selectedBookEdition,
         bookId:state.selectedBook._id,
       }
       ApiCreateTutorial(payload).then(res=>{
@@ -68,7 +68,7 @@ function CreateTutorialModalComponent(){
       if(state.selectedBook){
         setState({
           selectedBook:null!,
-          selectedBookEdiion:"",
+          selectedBookEdition:"",
         })
       }
       if(!e.target.value){
@@ -95,6 +95,7 @@ function CreateTutorialModalComponent(){
         selectedBook:book,
         bookName:book.name,
         bookSuggestions:[],
+        selectedBookEdition:book.editions[book.editions.length-1],
       })
     }
 
@@ -130,12 +131,12 @@ function CreateTutorialModalComponent(){
 
           {!!state.selectedBook && <Dropdown className="mt-2">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Book edition: {state.selectedBookEdiion || state.selectedBook.editions[state.selectedBook.editions.length-1]}
+              Book edition: {state.selectedBookEdition || state.selectedBook.editions[state.selectedBook.editions.length-1]}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
               {state.selectedBook.editions.map(ed=>(
-                <Dropdown.Item key={ed} onClick={() => setState({selectedBookEdiion:ed})}>{ed}</Dropdown.Item>
+                <Dropdown.Item key={ed} onClick={() => setState({selectedBookEdition:ed})}>{ed}</Dropdown.Item>
               ))}
             </Dropdown.Menu>
           </Dropdown>}

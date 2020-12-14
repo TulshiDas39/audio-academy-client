@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { EnumModals, useMultiState } from '../../../lib';
+import { ITutorialEntity } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ApiCreateClip, ApiCreateContributor, ICreateClipPayload, ICreateContributorPayload } from './api';
+import { ApiCreateClip, ApiSearchTutorial, ICreateClipPayload } from './api';
 import { ActionsModal } from './reducers';
 
 interface IFormData extends ICreateClipPayload{
@@ -12,9 +13,18 @@ interface IFormData extends ICreateClipPayload{
 }
 
 interface IState{
+  tutorialName:string;
+  selectedTutorial: ITutorialEntity;
+  tutorialSuggestions: ITutorialEntity[];
 }
 
-const initialState={} as IState;
+const initialState={
+  tutorialName:"",
+  tutorialSuggestions:[],
+  selectedTutorial:null!,
+} as IState;
+
+let preventBlur = false;
 
 function CreateClipModalComponent(){
     const dispatch = useDispatch();
@@ -41,6 +51,26 @@ function CreateClipModalComponent(){
       })
     }
 
+    const handleTutorialSearch=(e:ChangeEvent<HTMLInputElement>)=>{
+      if(!e.target.value) {
+        setState({
+          tutorialSuggestions:[],
+          tutorialName: "",
+        })
+        return;
+      }
+
+      setState({
+        tutorialName:e.target.value,
+      })
+
+      ApiSearchTutorial({
+        keyword: e.target.value
+      }).then(res=>{
+        if(res.response) setState({tutorialSuggestions:res.response.data})
+      });
+    }
+
     return (
     <Modal
         size="lg"
@@ -58,6 +88,24 @@ function CreateClipModalComponent(){
               <p className="text-danger">{errors.title?.message || ''}</p>
               <Form.Control name="lession" type="text" placeholder="Lesson" ref={register({required:"Lesson is required"})}/>
               <p className="text-danger">{errors.lession?.message || ''}</p>
+              <div>
+                <Form.Control type="text" placeholder="Select Tutorial" 
+                  onBlur={()=>!preventBlur && setState({tutorialSuggestions:[]})}
+                  onChange={handleTutorialSearch}
+                />
+                <div className="row mx">
+                  {
+                    state.tutorialSuggestions.map(t=>(
+                      <div className="col-auto border rounded"
+                       onMouseDown={_ => preventBlur = true}
+                       onMouseUp={_=> preventBlur = false}
+                       onClick={_=>setState({selectedTutorial:t,tutorialName:"",tutorialSuggestions:[]})}>
+                        {t.title}
+                      </div>
+                    ))
+                  }
+                </div>
+              </div>
               <Form.Control name="description" type="textarea" placeholder="Description" as={"textarea"} rows={3} ref={register({required:"Description is required"})}/>
               <p className="text-danger">{errors.description?.message || ''}</p>
               <Form.Control name="deadline" type={"text"} placeholder="Deadline for contributor" ref={register({required:"Deadline is required"})}/>
