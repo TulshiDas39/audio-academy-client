@@ -131,7 +131,7 @@ function CreateTutorialModalComponent(){
 
           {!!state.selectedBook && <Dropdown className="mt-2">
             <Dropdown.Toggle variant="success" id="dropdown-basic">
-              Book edition: {state.selectedBookEdition || state.selectedBook.editions[state.selectedBook.editions.length-1]}
+              Book edition: {state.selectedBookEdition}
             </Dropdown.Toggle>
 
             <Dropdown.Menu>

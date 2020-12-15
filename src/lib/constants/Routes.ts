@@ -17,7 +17,7 @@ export class UiRoutes{
 
     static Submitted = '/submitted';
     static Confirmed = '/confirmed';
-
+    static Tutorials = '/tutorials';
 
 }
 
@@ -41,8 +41,8 @@ export class ApiRoutes{
     static Tutorial = API_BASE_URL+"/tutorial";
     static CreateTutorial = ApiRoutes.Tutorial+"/create";
     static TutorialSearch = ApiRoutes.Tutorial+"/search";
+    static TutorialAll = ApiRoutes.Tutorial+"/all";
 
     static Book = API_BASE_URL+'/book';
-    static BookSearch = ApiRoutes.Book+"/search";
-    
+    static BookSearch = ApiRoutes.Book+"/search";    
 }
