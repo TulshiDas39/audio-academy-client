@@ -1,8 +1,11 @@
 import { ApiRoutes } from "../../lib";
-import { ITutorialEntity } from "../../lib/types/entities";
-import { ITutorialModel } from "../../lib/types/models";
+import { IEntityBook, ITutorialEntity } from "../../lib/types/entities";
 import { Intercept } from "../../lib/utils/interceptor";
 
+export interface ITutorialData{
+    _doc: ITutorialEntity;
+    book:IEntityBook;
+}
 export function ApiGetTutorials(){
-    return Intercept.get<ITutorialModel[]>(ApiRoutes.TutorialAll);
+    return Intercept.get<ITutorialData[]>(ApiRoutes.TutorialAll);
 }

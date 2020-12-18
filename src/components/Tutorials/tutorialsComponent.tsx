@@ -1,21 +1,30 @@
 import React from 'react';
-import useSwr from 'swr/dist/use-swr';
-import { ApiRoutes } from '../../lib';
+import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import useSwr from 'swr/dist';
+import { ApiRoutes, EnumModals } from '../../lib';
+import { ActionsModal } from '../common/modals';
 import { ApiGetTutorials } from './api';
 import { SingleTutorial } from './subComponents';
 
 function TutorialsComponent(){
-    const tutorials = React.useMemo(()=>{
-        const res = useSwr(ApiRoutes.TutorialAll,{fetcher:ApiGetTutorials});
-        return res.data?.response?.data
-    },[])
+    const dispatch = useDispatch();
+    const {data,error} = useSwr(ApiRoutes.TutorialAll,{fetcher:ApiGetTutorials});
+    console.log(data);
+
     return (
         <div>
-            {
-                tutorials?.map(tt=>(
-                    <SingleTutorial key={tt._id} tutorial={tt} />
-                ))
-            }
+            <div className="">
+                <Button onClick={()=> dispatch(ActionsModal.showModal(EnumModals.CREATE_TUTORIAL))} className="d-block ml-auto">Create new</Button>
+            </div>
+            <div>
+                {
+                    data?.response?.data?.map(tt=>(
+                        <SingleTutorial key={tt._doc._id} tutorial={tt} />
+                    ))
+                }
+            </div>
+            
         </div>
     )
 }

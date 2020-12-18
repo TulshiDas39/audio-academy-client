@@ -1,16 +1,18 @@
+import moment from 'moment';
 import React from 'react';
-import { ITutorialEntity } from '../../../lib/types/entities';
-import { ITutorialModel } from '../../../lib/types/models';
+import { ITutorialData } from '../api';
 interface IProps{
-    tutorial:ITutorialModel;
+    tutorial:ITutorialData;
 }
 function SingleTutorialComponent(props:IProps){
     
     return (
-        <div>
-            <h1>{props.tutorial.title}</h1>
-            <p>{props.tutorial.description}</p>
+        <div className="bg-light mt-2 py-1 px-2 border rounded">
+            <h6>{props.tutorial._doc.title}</h6>
+            <p>{props.tutorial._doc.description}</p>
             <p>Book name: {props.tutorial.book.name}</p>
+            <p>Book edition: {props.tutorial._doc.bookEdition}</p>
+            <p>Created: {moment(props.tutorial._doc.createdAt).format('Do MMM, YYYY')}</p>
         </div>
     )
 }

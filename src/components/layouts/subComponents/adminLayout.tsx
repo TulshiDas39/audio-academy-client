@@ -25,7 +25,7 @@ function AdminLayoutComponent() {
                         <Suspense fallback={null}>
                             <Switch>
                                 <Route path={UiRoutes.AdminDashBoard} exact component={AdminDashboard} />
-                                <Route path={UiRoutes.Acitivity} exact component={Activity} />
+                                <Route path={UiRoutes.Tutorials} component={Activity} />
                             </Switch>
                         </Suspense>
                     </div>
