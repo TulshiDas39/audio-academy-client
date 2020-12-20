@@ -13,15 +13,13 @@ function AdminLayoutComponent() {
     return (
         <div className="h-100 d-flex flex-column">
             <AdminModals />
-            <div className="flex-shrink-0">
-                <TopNav />
-            </div>
-            <div className="flex-grow-1">
+            <TopNav />
+            <div className="pageContent">
                 <div className="row mx-0 w-100 h-100">
                     <div className="col-auto px-0">
                         <AdminLeftNav />
                     </div>
-                    <div className="col">
+                    <div className="col h-100">
                         <Suspense fallback={null}>
                             <Switch>
                                 <Route path={UiRoutes.AdminDashBoard} exact component={AdminDashboard} />

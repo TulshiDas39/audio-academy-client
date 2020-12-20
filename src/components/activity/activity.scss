@@ -1,0 +1,8 @@
+.activityComp{
+ .navPart{
+     height: 3rem;
+ }
+ .viewPart{
+     height: calc(100% - 3rem);
+ }
+}
