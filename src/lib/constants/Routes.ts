@@ -14,11 +14,12 @@ export class UiRoutes{
     static AdminDashBoard = UiRoutes.Root;
     static Acitivity = UiRoutes.Root+"activity";
 
+    static Items = UiRoutes.Root+"items"
 
     static Submitted = '/submitted';
     static Confirmed = '/confirmed';
-    static Tutorials = '/tutorials';
-
+    static Tutorials =UiRoutes.Items+ '/tutorials';
+    static Books = UiRoutes.Items+ '/books';
 }
 
 export const API_BASE_URL = process.env.REACT_APP_BASE_URL || "http://[::1]:3000";
@@ -44,5 +45,7 @@ export class ApiRoutes{
     static TutorialAll = ApiRoutes.Tutorial+"/all";
 
     static Book = API_BASE_URL+'/book';
-    static BookSearch = ApiRoutes.Book+"/search";    
+    static BookSearch = ApiRoutes.Book+"/search";
+    static BooksAll = ApiRoutes.Book+'/all';
+ 
 }

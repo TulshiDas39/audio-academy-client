@@ -1,28 +1,20 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import {  UiRoutes } from '../../lib';
 
 const Tutorials = React.lazy(()=>import('../Tutorials/tutorialsComponent'));
+const Books = React.lazy(()=>import('../books/books'));
 
 function ActivityComponent() {
-    const dispatch = useDispatch();
     return (
         <div>
-
-        
             <div className="d-flex align-items-center mt-2 border-bottom">
-
-                    <NavLink to={UiRoutes.Tutorials} title="Tutorials" activeClassName="bg-white border-bottom-none" className="py-2 px-3" >Tutorials</NavLink>
-                    
-                  
-                {/* <Button className="mr-2" onClick={() => dispatch(ActionsModal.showModal(EnumModals.REGISTER_CONTRIBUTOR))}>Register Contributor</Button>
-                <Button className="mr-2" onClick={() => dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Create Clip</Button>
-                <Button className="mr-2" onClick={() => dispatch(ActionsModal.showModal(EnumModals.CREATE_TUTORIAL))}>Create Tutorial</Button>
-                <Button className="mr-2" onClick={() => dispatch(ActionsModal.showModal(EnumModals.CREATE_BOOK))}>Create Book</Button> */}
+                <NavLink to={UiRoutes.Tutorials} title="Tutorials" activeClassName="bg-white border-bottom-none" className="hover-no-underline py-2 px-3" >Tutorials</NavLink>
+                <NavLink to={UiRoutes.Books} title="Books" activeClassName="bg-white border-bottom-none" className="hover-no-underline py-2 px-3" >Books</NavLink>                    
             </div>
             <Switch>
                 <Route component={Tutorials} exact path={UiRoutes.Tutorials} />
+                <Route component={Books} exact path={UiRoutes.Books} />
             </Switch>  
         </div>
     )

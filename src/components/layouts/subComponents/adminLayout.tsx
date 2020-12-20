@@ -17,7 +17,7 @@ function AdminLayoutComponent() {
                 <TopNav />
             </div>
             <div className="flex-grow-1">
-                <div className="row mx-0 h-100">
+                <div className="row mx-0 w-100 h-100">
                     <div className="col-auto px-0">
                         <AdminLeftNav />
                     </div>
@@ -25,7 +25,7 @@ function AdminLayoutComponent() {
                         <Suspense fallback={null}>
                             <Switch>
                                 <Route path={UiRoutes.AdminDashBoard} exact component={AdminDashboard} />
-                                <Route path={UiRoutes.Tutorials} component={Activity} />
+                                <Route path={UiRoutes.Items} component={Activity} />
                             </Switch>
                         </Suspense>
                     </div>
