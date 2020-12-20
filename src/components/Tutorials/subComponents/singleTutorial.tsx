@@ -7,7 +7,7 @@ interface IProps{
 function SingleTutorialComponent(props:IProps){
     
     return (
-        <div className="bg-light mt-2 py-1 px-2 border rounded">
+        <div className="bg-white mt-2 py-1 px-2 border rounded">
             <h6>{props.tutorial._doc.title}</h6>
             <p>{props.tutorial._doc.description}</p>
             <p>Book name: {props.tutorial.book.name}</p>
