@@ -12,8 +12,6 @@ function AuthenticatedLayoutComponent() {
         isLogin: state.login.isLoggedIn,
         apiProfileVersion:state.api.getProfile.version
     }))
-    console.log('rendering');
-    console.log(store);
     if(!store.isLogin) return <UnAuthenticatedLayout/>;
     if(ThunkLogin.Profile.type === EnumUserType.CONTRIBUTOR) return <ContributorLayout />
     if(ThunkLogin.Profile.type === EnumUserType.ADMIN) return <AdminLayout />
