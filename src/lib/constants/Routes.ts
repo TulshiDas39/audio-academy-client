@@ -14,7 +14,9 @@ export class UiRoutes{
     static AdminDashBoard = UiRoutes.Root;
     static Acitivity = UiRoutes.Root+"activity";
 
-    static Items = UiRoutes.Root+"items"
+    static Items = UiRoutes.Root+"items";
+    static Contributors = UiRoutes.Items+ '/contributors'
+
 
     static Submitted = '/submitted';
     static Confirmed = '/confirmed';
@@ -34,6 +36,7 @@ export class ApiRoutes{
 
     private static User = API_BASE_URL+'/user';
     static MyProfile = ApiRoutes.User;
+    static AllContributors = ApiRoutes.User + "/contributor/all";
 
     static Clip = API_BASE_URL+'/clip';
     static AssignedClip = ApiRoutes.Clip+'/assigned';
