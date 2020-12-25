@@ -2,8 +2,7 @@ import { ApiRoutes } from "../../lib";
 import { IEntityBook, ITutorialEntity } from "../../lib/types/entities";
 import { Intercept } from "../../lib/utils/interceptor";
 
-export interface ITutorialData{
-    _doc: ITutorialEntity;
+export interface ITutorialData extends ITutorialEntity{
     book:IEntityBook;
 }
 export function ApiGetTutorials(){

@@ -20,7 +20,7 @@ function TutorialsComponent(){
             <div>
                 {
                     data?.response?.data?.map(tt=>(
-                        <SingleTutorial key={tt._doc._id} tutorial={tt} />
+                        <SingleTutorial key={tt._id} tutorial={tt} />
                     ))
                 }
             </div>

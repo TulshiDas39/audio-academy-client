@@ -3,10 +3,10 @@ import { IClipEntity, ITutorialEntity } from "../../lib/types/entities";
 import { Intercept } from "../../lib/utils/interceptor";
 
 export interface IGetSingleTutorialDetails{
-    tutorial:ITutorialEntity;
+    tutorial:{_doc:ITutorialEntity};
     clips: IClipEntity[];
 }
 
 export function apiGetSingleTutorialDetails(tutorialId:string){
-    return Intercept.get(ApiRoutes.Tutorial+"/"+tutorialId);
+    return Intercept.get<IGetSingleTutorialDetails>(ApiRoutes.Tutorial+"/byId/"+tutorialId);
 }
