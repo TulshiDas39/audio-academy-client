@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 import { SingleTutorialDetails } from '../../singleTutorialDetails';
@@ -10,12 +10,14 @@ const Contributors = React.lazy(()=>import('../../contributors/contributors'));
 function ItemsViewComponent() {
     return (
         <div className="viewPart overflow-auto">
-            <Switch>
-                <Route component={Tutorials} exact path={UiRoutes.Tutorials} />
-                <Route component={SingleTutorialDetails} exact path={UiRoutes.Tutorials+"/:id"} />
-                <Route component={Books} exact path={UiRoutes.Books} />
-                <Route component={Contributors} exact path={UiRoutes.Contributors} />
-            </Switch>
+            <Suspense fallback={null}>
+                <Switch>
+                    <Route component={Tutorials} exact path={UiRoutes.Tutorials} />
+                    <Route component={SingleTutorialDetails} exact path={UiRoutes.Tutorials+"/:id"} />
+                    <Route component={Books} exact path={UiRoutes.Books} />
+                    <Route component={Contributors} exact path={UiRoutes.Contributors} />
+                </Switch>
+            </Suspense>
         </div>
     )
 }
