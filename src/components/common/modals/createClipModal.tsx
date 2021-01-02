@@ -64,6 +64,7 @@ function CreateClipModalComponent(){
       if(!tutorialId) return;
       ApiCreateClip({
         ...data,
+        contributorId:state.selectedContributor._id,
         tutorialId: tutorialId,
       }).then(res=>{
         if(res.response){
