@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './index.scss';
+import "react-datepicker/dist/react-datepicker.css";
 import { ReduxStore } from './store/store';
 import { Provider } from 'react-redux';
 

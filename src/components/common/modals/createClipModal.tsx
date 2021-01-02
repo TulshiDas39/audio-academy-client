@@ -9,6 +9,8 @@ import { useSelectorTyped } from '../../../store/rootReducer';
 import { ApiGetAllContributors } from '../../contributors/api';
 import { ApiCreateClip, ApiSearchTutorial, ICreateClipPayload } from './api';
 import { ActionsModal } from './reducers';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
 interface IFormData{
     title: string;
@@ -24,6 +26,8 @@ interface IState{
   selectedContributor:IEntityUser;
   tutorialSuggestions: ITutorialEntity[];
   contributorSuggestions:IEntityUser[];
+  fetchTriggerKey : string;
+  selectedDeadline?: string;
 }
 
 const initialState={
@@ -33,6 +37,7 @@ const initialState={
   selectedTutorial:null!,
   selectedContributor:null!,
   contributorSuggestions:[],
+  fetchTriggerKey: Date.now()+"",
 } as IState;
 
 let preventBlur = false;
@@ -66,6 +71,7 @@ function CreateClipModalComponent(){
         ...data,
         contributorId:state.selectedContributor._id,
         tutorialId: tutorialId,
+        deadline: state.selectedDeadline,
       }).then(res=>{
         if(res.response){
           onClose();
@@ -146,6 +152,11 @@ function CreateClipModalComponent(){
               <p className="text-danger">{errors.description?.message || ''}</p>
               <Form.Control name="deadline" type={"text"} placeholder="Deadline for contributor" ref={register()}/>
               <p className="text-danger">{errors.deadline?.message || ''}</p>
+
+              <div className="mb-1">
+                <span>Deadline(optional): </span>
+                <DatePicker className="border border-primary rounded" selected={new Date(state.selectedDeadline!)} onChange={(date:Date) => setState({selectedDeadline: moment(date).toISOString()})} />
+              </div>
 
                <div>
                 <Form.Control type="text" value={state.contributorSearchKey} placeholder="Select Contributor" 
