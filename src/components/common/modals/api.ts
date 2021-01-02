@@ -19,9 +19,9 @@ export interface ICreateClipPayload{
     description: string;
     tutorialId: string;
     lession: string;
-    deadline?:string;
-    contributorId?:string;
-    images?:string[];
+    deadline?: string;
+    contributorId?: string;
+    images?: string[];
 }
 export function ApiCreateClip(payload:ICreateClipPayload){
     return Intercept.post(ApiRoutes.Clip,payload);

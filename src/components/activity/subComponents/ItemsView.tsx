@@ -13,7 +13,7 @@ function ItemsViewComponent() {
             <Suspense fallback={null}>
                 <Switch>
                     <Route component={Tutorials} exact path={UiRoutes.Tutorials} />
-                    <Route component={SingleTutorialDetails} exact path={UiRoutes.Tutorials+"/:id"} />
+                    <Route component={SingleTutorialDetails} exact path={UiRoutes.SingleTutorialDetails} />
                     <Route component={Books} exact path={UiRoutes.Books} />
                     <Route component={Contributors} exact path={UiRoutes.Contributors} />
                 </Switch>

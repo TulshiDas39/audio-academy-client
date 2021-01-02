@@ -21,6 +21,7 @@ export class UiRoutes{
     static Submitted = '/submitted';
     static Confirmed = '/confirmed';
     static Tutorials =UiRoutes.Items+'/tutorials';
+    static SingleTutorialDetails =UiRoutes.Tutorials+'/:id';
     static Books = UiRoutes.Items+ '/books';
     static Tutorial = '/tutorial';
 }
