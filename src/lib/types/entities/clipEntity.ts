@@ -7,13 +7,13 @@ export interface IClipEntity extends IEntityBase{
 
   lession: string;
 
-  submissionDate:string;
+  submissionDate?:string;
 
-  contributorId:string;
+  contributorId?:string;
 
   deadline?:string;
 
-  audioFilePath:string;
+  audioFilePath?:string;
 
   description: string;
 }

@@ -1,5 +1,5 @@
 import { ApiRoutes } from "../../../lib";
-import { IEntityBook, ITutorialEntity } from "../../../lib/types/entities";
+import { IClipEntity, IEntityBook, ITutorialEntity } from "../../../lib/types/entities";
 import { ISearchModel } from "../../../lib/types/models";
 import { Intercept } from "../../../lib/utils/interceptor";
 
@@ -25,6 +25,10 @@ export interface ICreateClipPayload{
 }
 export function ApiCreateClip(payload:ICreateClipPayload){
     return Intercept.post(ApiRoutes.Clip,payload);
+}
+
+export function ApiUpdateClip(payload:IClipEntity){
+    return Intercept.put<IClipEntity>(ApiRoutes.Clip,payload);
 }
 
 export interface ICreateTutorialPayload{

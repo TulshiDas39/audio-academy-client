@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import { ApiRoutes, EnumModals, useMultiState } from '../../../lib';
-import { IEntityUser, ITutorialEntity } from '../../../lib/types/entities';
+import { IClipEntity, IEntityUser, ITutorialEntity } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
 import { ApiGetAllContributors } from '../../contributors/api';
-import { ApiCreateClip, ApiSearchTutorial, ICreateClipPayload } from './api';
+import { ApiCreateClip, ApiSearchTutorial, ApiUpdateClip, ICreateClipPayload } from './api';
 import { ActionsModal } from './reducers';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import { ModalData } from './modalData';
 
 interface IFormData{
     title: string;
@@ -19,7 +20,6 @@ interface IFormData{
 }
 
 interface IState{
-  tutorialName:string;
   contributorSearchKey:string;
   selectedTutorial: ITutorialEntity;
   selectedContributor:IEntityUser;
@@ -30,7 +30,6 @@ interface IState{
 }
 
 const initialState={
-  tutorialName:"",
   contributorSearchKey:"",
   tutorialSuggestions:[],
   selectedTutorial:null!,
@@ -55,7 +54,18 @@ function CreateClipModalComponent(){
     })
     
     useEffect(()=>{
-      if(!store.show) setState(initialState);
+      if(!store.show) {        
+        setState(initialState);
+        ModalData.createClipModal.existing = undefined;
+      }
+      else if(ModalData.createClipModal.existing){
+        const existingClip = ModalData.createClipModal.existing;
+        setState({
+          selectedContributor:existingClip.contributor,
+          selectedDeadline:existingClip.deadline,            
+        })
+      }
+      
      
     },[store.show])
     const {data} = useSWR(ApiRoutes.AllContributors, ApiGetAllContributors)
@@ -66,7 +76,23 @@ function CreateClipModalComponent(){
     const onSubmit=(data: IFormData)=>{
     const tutorialId = window.location.pathname.split("/").pop();
       if(!tutorialId) return;
-      ApiCreateClip({
+      if(ModalData.createClipModal.existing){
+        const existingClip = ModalData.createClipModal.existing;
+        const payload:IClipEntity = {
+          ...existingClip,
+          _id:existingClip._id,
+          contributorId: state.selectedContributor._id,
+          description: data.description,
+          lession: data.lession,
+          title: data.title,
+          deadline: state.selectedDeadline,
+          tutorialId: state.selectedTutorial._id,
+        };
+        ApiUpdateClip(payload).then(res=>{
+          if(res.response) onClose();
+        });
+      }
+      else ApiCreateClip({
         ...data,
         contributorId:state.selectedContributor._id,
         tutorialId: tutorialId,
@@ -76,26 +102,6 @@ function CreateClipModalComponent(){
           onClose();
         }
       })
-    }
-
-    const handleTutorialSearch=(e:ChangeEvent<HTMLInputElement>)=>{
-      if(!e.target.value) {
-        setState({
-          tutorialSuggestions:[],
-          tutorialName: "",
-        })
-        return;
-      }
-
-      setState({
-        tutorialName:e.target.value,
-      })
-
-      ApiSearchTutorial({
-        keyword: e.target.value
-      }).then(res=>{
-        if(res.response) setState({tutorialSuggestions:res.response.data})
-      });
     }
 
     const handleContributorSearch=(e:ChangeEvent<HTMLInputElement>)=>{
@@ -119,40 +125,24 @@ function CreateClipModalComponent(){
       <Modal.Body>
         <Form id="registerContributorForm" onSubmit={handleSubmit(onSubmit)}>
             <Form.Group>
-              <Form.Control name="title" type="text" placeholder="Title" ref={register({required:"Title is required"})}/>
+              <Form.Control defaultValue={ModalData.createClipModal.existing?.title} name="title" type="text" placeholder="Title" ref={register({required:"Title is required"})}/>
               <p className="text-danger">{errors.title?.message || ''}</p>
-              <Form.Control name="lession" type="text" placeholder="Lesson" ref={register({required:"Lesson is required"})}/>
+              <Form.Control defaultValue={ModalData.createClipModal.existing?.lession} name="lession" type="text" placeholder="Lesson" ref={register({required:"Lesson is required"})}/>
               <p className="text-danger">{errors.lession?.message || ''}</p>
-              {/* <div>
-                <Form.Control type="text" value={state.tutorialName} placeholder="Select Tutorial" 
-                  onBlur={()=>!preventBlur && setState({tutorialSuggestions:[]})}
-                  onChange={handleTutorialSearch}
-                />
-                <div className="">
-                  {
-                    state.tutorialSuggestions.map(t=>(
-                      <div className="border rounded py-1 cur-point"
-                       onMouseDown={_ => preventBlur = true}
-                       onMouseUp={_=> preventBlur = false}
-                       onClick={_=>setState({selectedTutorial:t,tutorialName:t.title,tutorialSuggestions:[]})}>
-                        {t.title}
-                      </div>
-                    ))
-                  }
-                </div>
-              </div> */}
+
               <Form.Control name="description" 
                 type="textarea" placeholder="Description" 
                 as={"textarea"} rows={3} 
                 ref={register({required:"Description is required"})}
                 className="mt-1"
+                defaultValue={ModalData.createClipModal.existing?.description}
                 />
 
               <p className="text-danger">{errors.description?.message || ''}</p>
              
               <div className="mb-1">
                 <span>Deadline(optional): </span>
-                <DatePicker className="border border-primary rounded" selected={new Date(state.selectedDeadline!)} onChange={(date:Date) => setState({selectedDeadline: moment(date).toISOString()})} />
+                <DatePicker className="border border-primary rounded" selected={state.selectedDeadline? new Date(state.selectedDeadline):new Date()} onChange={(date:Date) => setState({selectedDeadline: moment(date).toISOString()})} />
               </div>
 
                <div>
