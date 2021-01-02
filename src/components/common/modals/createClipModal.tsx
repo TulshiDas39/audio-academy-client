@@ -16,7 +16,6 @@ interface IFormData{
     title: string;
     lession: string;
     description: string;
-    deadline :string;
 }
 
 interface IState{
@@ -150,9 +149,7 @@ function CreateClipModalComponent(){
                 />
 
               <p className="text-danger">{errors.description?.message || ''}</p>
-              <Form.Control name="deadline" type={"text"} placeholder="Deadline for contributor" ref={register()}/>
-              <p className="text-danger">{errors.deadline?.message || ''}</p>
-
+             
               <div className="mb-1">
                 <span>Deadline(optional): </span>
                 <DatePicker className="border border-primary rounded" selected={new Date(state.selectedDeadline!)} onChange={(date:Date) => setState({selectedDeadline: moment(date).toISOString()})} />
