@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { ApiRoutes, EnumModals, useMultiState } from '../../../lib';
 import { IClipEntity, IEntityUser, ITutorialEntity } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
@@ -12,6 +12,7 @@ import { ActionsModal } from './reducers';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { ModalData } from './modalData';
+import { apiGetSingleTutorialDetails } from '../../singleTutorialDetails/api';
 
 interface IFormData{
     title: string;
@@ -21,7 +22,6 @@ interface IFormData{
 
 interface IState{
   contributorSearchKey:string;
-  selectedTutorial: ITutorialEntity;
   selectedContributor:IEntityUser;
   tutorialSuggestions: ITutorialEntity[];
   contributorSuggestions:IEntityUser[];
@@ -81,20 +81,23 @@ function CreateClipModalComponent(){
         const payload:IClipEntity = {
           ...existingClip,
           _id:existingClip._id,
-          contributorId: state.selectedContributor._id,
+          contributorId: state.selectedContributor?._id,
           description: data.description,
           lession: data.lession,
           title: data.title,
           deadline: state.selectedDeadline,
-          tutorialId: state.selectedTutorial._id,
+          tutorialId: tutorialId,
         };
         ApiUpdateClip(payload).then(res=>{
-          if(res.response) onClose();
+          if(res.response) {
+            onClose();
+            mutate(tutorialId,apiGetSingleTutorialDetails(tutorialId))
+          }
         });
       }
       else ApiCreateClip({
         ...data,
-        contributorId:state.selectedContributor._id,
+        contributorId:state.selectedContributor?._id,
         tutorialId: tutorialId,
         deadline: state.selectedDeadline,
       }).then(res=>{
@@ -142,7 +145,7 @@ function CreateClipModalComponent(){
              
               <div className="mb-1">
                 <span>Deadline(optional): </span>
-                <DatePicker className="border border-primary rounded" selected={state.selectedDeadline? new Date(state.selectedDeadline):new Date()} onChange={(date:Date) => setState({selectedDeadline: moment(date).toISOString()})} />
+                <DatePicker className="border border-primary rounded" selected={state.selectedDeadline? new Date(state.selectedDeadline):undefined} onChange={(date:Date) => setState({selectedDeadline: moment(date).toISOString()})} />
               </div>
 
                <div>
