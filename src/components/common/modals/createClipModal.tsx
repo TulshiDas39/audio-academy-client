@@ -62,7 +62,8 @@ function CreateClipModalComponent(){
         const existingClip = ModalData.createClipModal.existing;
         setState({
           selectedContributor:existingClip.contributor,
-          selectedDeadline:existingClip.deadline,            
+          selectedDeadline:existingClip.deadline,
+          contributorSearchKey:existingClip.contributor?.name            
         })
       }
       
