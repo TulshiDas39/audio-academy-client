@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { ChangeEvent, FocusEvent, useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -82,7 +82,7 @@ function CreateClipModalComponent(){
         const payload:IClipEntity = {
           ...existingClip,
           _id:existingClip._id,
-          contributorId: state.selectedContributor?._id,
+          contributorId: state.selectedContributor?._id || null!,
           description: data.description,
           lession: data.lession,
           title: data.title,
@@ -108,11 +108,16 @@ function CreateClipModalComponent(){
       })
     }
 
+    const getContributorSuggestions=(searchKey:string)=>{
+      return data?.response?.data.filter(x=>x.name.startsWith(searchKey) || x.email.startsWith(searchKey));
+    }
     const handleContributorSearch=(e:ChangeEvent<HTMLInputElement>)=>{
-      setState({contributorSearchKey:e.target.value});
-      if(!e.target.value) setState({contributorSuggestions:[]})
-      else setState({
-        contributorSuggestions: data?.response?.data.filter(x=>x.name.startsWith(e.target.value) || x.email.startsWith(e.target.value))
+      //setState({contributorSearchKey:e.target.value});
+      // if(!e.target.value) setState({contributorSuggestions:[]})
+      setState({
+        contributorSearchKey:e.target.value,
+        contributorSuggestions: getContributorSuggestions(e.target.value),
+        selectedContributor:!e.target.value?undefined:state.selectedContributor
       })
     }
 
@@ -150,7 +155,8 @@ function CreateClipModalComponent(){
               </div>
 
                <div>
-                <Form.Control type="text" value={state.contributorSearchKey} placeholder="Select Contributor" 
+                <Form.Control type="text" value={state.contributorSearchKey} placeholder="Select Contributor"
+                  onFocus={(e:FocusEvent<HTMLInputElement>)=> setState({contributorSuggestions:getContributorSuggestions(e.target.value)})} 
                   onBlur={()=>!preventBlur && setState({contributorSuggestions:[]})}
                   onChange={handleContributorSearch}
                 />
