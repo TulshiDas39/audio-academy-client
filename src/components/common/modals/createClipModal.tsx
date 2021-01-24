@@ -92,7 +92,7 @@ function CreateClipModalComponent(){
         ApiUpdateClip(payload).then(res=>{
           if(res.response) {
             onClose();
-            mutate(tutorialId,apiGetSingleTutorialDetails(tutorialId))
+            mutate(tutorialId,apiGetSingleTutorialDetails(tutorialId),false)
           }
         });
       }

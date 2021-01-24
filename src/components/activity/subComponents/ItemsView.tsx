@@ -12,7 +12,7 @@ function ItemsViewComponent() {
         <div className="viewPart overflow-auto">
             <Suspense fallback={null}>
                 <Switch>
-                    <Route component={Tutorials} exact path={UiRoutes.Tutorials} />
+                    <Route component={Tutorials} exact path={`(${UiRoutes.Tutorials}|${UiRoutes.Items})`} />
                     <Route component={SingleTutorialDetails} exact path={UiRoutes.SingleTutorialDetails} />
                     <Route component={Books} exact path={UiRoutes.Books} />
                     <Route component={Contributors} exact path={UiRoutes.Contributors} />

@@ -8,11 +8,9 @@ function AdminLeftNavComponent(){
 
     return (
         <div className="contributorLeftNav h-100">
-            <NavLink to={UiRoutes.AdminDashBoard} exact className="px-4 text-center">Tasks</NavLink>
-            <NavLink to={UiRoutes.Tutorials}  isActive={()=>{
-                 return pathName.startsWith(UiRoutes.Items)}
-                } className="text-center">Items</NavLink>
-            <NavLink to={UiRoutes.Confirmed} exact className="text-center">Reports</NavLink>
+            {/* <NavLink to={UiRoutes.AdminDashBoard} exact className="px-4 text-center">Tasks</NavLink> */}
+            <NavLink to={UiRoutes.AdminDashBoard} className="text-center px-2">Items</NavLink>
+            {/* <NavLink to={UiRoutes.Confirmed} exact className="text-center">Reports</NavLink> */}
         </div>
     )
 }

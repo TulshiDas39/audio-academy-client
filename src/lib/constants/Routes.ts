@@ -14,15 +14,15 @@ export class UiRoutes{
     static AdminDashBoard = UiRoutes.Root;
     static Acitivity = UiRoutes.Root+"activity";
 
-    static Items = UiRoutes.Root+"items";
-    static Contributors = UiRoutes.Items+ '/contributors'
+    static Items = UiRoutes.Root;
+    static Contributors = UiRoutes.Items+ 'contributors'
 
 
     static Submitted = '/submitted';
     static Confirmed = '/confirmed';
-    static Tutorials =UiRoutes.Items+'/tutorials';
+    static Tutorials =UiRoutes.Items+'tutorials';
     static SingleTutorialDetails =UiRoutes.Tutorials+'/:id';
-    static Books = UiRoutes.Items+ '/books';
+    static Books = UiRoutes.Items+ 'books';
     static Tutorial = '/tutorial';
 }
 
