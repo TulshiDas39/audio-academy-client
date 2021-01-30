@@ -7,9 +7,20 @@ import { ActionsModal } from '../common/modals';
 import { ApiGetAllContributors } from './api';
 import { Contributor } from './subComponents/contributor';
 
+
+export const fetchContributors=()=>{
+    return ApiGetAllContributors().then(res=>{
+        if(res.response) return res.response.data;
+        throw res.error;
+    })
+}
+
+
 function ContributorsComponent(){
     const dispatch = useDispatch();
-    const {data} = useSwr(ApiRoutes.AllContributors,ApiGetAllContributors);
+
+    const {data} = useSwr(ApiRoutes.AllContributors,fetchContributors);
+    console.log(data);
     return (
         <div>
             <div>
@@ -17,7 +28,7 @@ function ContributorsComponent(){
             </div>
             <div>
                 {
-                    data?.response?.data.map(contr=>(
+                    data?.map?.((contr:any)=>(
                         <Contributor key = {contr._id} user = {contr} />
                     ))
                 }

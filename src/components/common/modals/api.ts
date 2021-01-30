@@ -1,5 +1,5 @@
 import { ApiRoutes } from "../../../lib";
-import { IClipEntity, IEntityBook, ITutorialEntity } from "../../../lib/types/entities";
+import { IClipEntity, IEntityBook, IEntityUser, ITutorialEntity } from "../../../lib/types/entities";
 import { ISearchModel } from "../../../lib/types/models";
 import { Intercept } from "../../../lib/utils/interceptor";
 
@@ -57,4 +57,8 @@ export function ApiSearchBook(query:ISearchModel){
 
 export function ApiSearchTutorial(query:ISearchModel){
     return Intercept.get<ITutorialEntity[]>(`${ApiRoutes.TutorialSearch}?keyword=${query.keyword}` )
+}
+
+export function ApiUpdateUser(body:IEntityUser){
+    return Intercept.put<IEntityUser>(ApiRoutes.User,body);
 }

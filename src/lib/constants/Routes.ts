@@ -35,7 +35,7 @@ export class ApiRoutes{
     static Signup=ApiRoutes.Auth+'/signup';
     static CreateContributor=ApiRoutes.Auth+'/createContributor';
 
-    private static User = API_BASE_URL+'/user';
+    static User = API_BASE_URL+'/user';
     static MyProfile = ApiRoutes.User;
     static AllContributors = ApiRoutes.User + "/contributor/all";
 

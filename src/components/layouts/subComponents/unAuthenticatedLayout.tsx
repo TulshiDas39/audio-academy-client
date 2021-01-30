@@ -4,6 +4,7 @@ import { UiRoutes } from '../../../lib';
 
 const Login = React.lazy(()=>import('../../login/login'));
 const Signup = React.lazy(()=>import('../../signup/signup'));
+const NotFound = React.lazy(()=>import('../../notfound/notFound'));
 
 function UnAuthenticatedLayoutComponent(){
     console.log('rendering');
@@ -12,6 +13,7 @@ function UnAuthenticatedLayoutComponent(){
             <Switch>
                 <Route path={UiRoutes.Login} exact component={Login} />
                 <Route path={UiRoutes.SingUp} exact component={Signup} />
+                <Route component={NotFound}/>
             </Switch>
         </Suspense>
     )

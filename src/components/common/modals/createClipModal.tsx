@@ -13,6 +13,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { ModalData } from './modalData';
 import { apiGetSingleTutorialDetails } from '../../singleTutorialDetails/api';
+import { fetchContributors } from '../../contributors/contributors';
 
 interface IFormData{
     title: string;
@@ -69,7 +70,7 @@ function CreateClipModalComponent(){
       
      
     },[store.show])
-    const {data} = useSWR(ApiRoutes.AllContributors, ApiGetAllContributors)
+    const {data} = useSWR(ApiRoutes.AllContributors, fetchContributors)
     const onClose=()=>{
       dispatch(ActionsModal.hideModal(EnumModals.CREATE_CLIP));
     }
@@ -109,7 +110,7 @@ function CreateClipModalComponent(){
     }
 
     const getContributorSuggestions=(searchKey:string)=>{
-      return data?.response?.data.filter(x=>x.name.startsWith(searchKey) || x.email.startsWith(searchKey));
+      return data?.filter?.(x=>x.name.startsWith(searchKey) || x.email.startsWith(searchKey));
     }
     const handleContributorSearch=(e:ChangeEvent<HTMLInputElement>)=>{
       //setState({contributorSearchKey:e.target.value});
