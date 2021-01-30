@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
+import { IEntityBook } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
 import { ApiCreateBook, ApiUpdateBook, ICreateBookPayload } from './api';
 import { ModalData } from './modalData';
@@ -77,7 +78,7 @@ function CreateBookModalComponent(){
     }
 
     const updateBook=(data:IFormData)=>{
-      const existingBook = ModalData.createBookModal.existing;
+      const existingBook = {...ModalData.createBookModal.existing} as IEntityBook;
       if(!existingBook) return;
       existingBook.name = data.name;
       existingBook.level = data.level;
@@ -86,7 +87,7 @@ function CreateBookModalComponent(){
       ApiUpdateBook(existingBook).then(res=>{
         if(res.response){
           mutate(ApiRoutes.BooksAll,(data:any)=>{
-            const arr = ArrayUtil.UpdateItem(data,res.response?.data!,"_id");
+            const arr = ArrayUtil.UpdateItem(data,existingBook,"_id");
             return arr;
           },false);
           onClose();
