@@ -7,8 +7,15 @@ import { ActionsModal } from '../common/modals';
 import { apiGetBooks } from './api';
 import { SingleBook } from './subComponents';
 
+const fetchBooks=()=>{
+    return apiGetBooks().then(res=>{
+        if(res.response) return res.response.data;
+        else throw res.error
+    })
+}
+
 function BooksComponent(){
-    const {data,error} = useSWR(ApiRoutes.BooksAll,apiGetBooks);
+    const {data} = useSWR(ApiRoutes.BooksAll,fetchBooks);
     const dispatch = useDispatch();
     return (
         <div>
@@ -16,7 +23,7 @@ function BooksComponent(){
                 <Button className="d-block ml-auto" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.CREATE_BOOK))}>Create new</Button>
             </div>
             <div>
-                {data?.response?.data.map(book=>(
+                {data?.map(book=>(
                     <SingleBook key={book._id} book={book} />
                 ))}
             </div>

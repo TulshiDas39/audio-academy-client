@@ -62,3 +62,7 @@ export function ApiSearchTutorial(query:ISearchModel){
 export function ApiUpdateUser(body:IEntityUser){
     return Intercept.put<IEntityUser>(ApiRoutes.User,body);
 }
+
+export function ApiUpdateBook(body:IEntityBook){
+    return Intercept.put<IEntityBook>(ApiRoutes.Book,body);
+}

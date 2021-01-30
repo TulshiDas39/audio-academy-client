@@ -1,4 +1,4 @@
-import { IEntityUser } from "../../../lib/types/entities";
+import { IEntityBook, IEntityUser } from "../../../lib/types/entities";
 import { IClipModel } from "../../../lib/types/models";
 
 export interface IModalData{
@@ -7,6 +7,9 @@ export interface IModalData{
     },
     registerContributorModal:{
         existing?:IEntityUser
+    },
+    createBookModal:{
+        existing?:IEntityBook
     }
 }
 
@@ -15,6 +18,9 @@ export const ModalData:IModalData={
         existing:undefined,
     },
     registerContributorModal:{
+        existing:undefined
+    },
+    createBookModal:{
         existing:undefined
     }
     

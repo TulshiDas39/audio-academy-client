@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { EnumModals, useMultiState } from '../../../lib';
+import { mutate } from 'swr';
+import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ApiCreateBook, ICreateBookPayload } from './api';
+import { ApiCreateBook, ApiUpdateBook, ICreateBookPayload } from './api';
+import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
 
 interface IFormData{
@@ -34,18 +36,33 @@ function CreateBookModalComponent(){
 
     const [state,setState]= useMultiState(initialState);
 
-    const {errors, register, handleSubmit} = useForm<IFormData>({
+    const {errors, register, handleSubmit,setValue} = useForm<IFormData>({
       mode:"onSubmit",
       reValidateMode:"onChange",
     })
+
+    useEffect(()=>{
+      if(store.show){
+        const existingBook = ModalData.createBookModal.existing;
+        if(existingBook){
+          setValue("level",existingBook.level);
+          setValue("name",existingBook.name);
+          setState({
+            editions:existingBook.editions,
+            writers:existingBook.writers,
+          })
+        }
+      }
+      else{
+        ModalData.createBookModal.existing = undefined;
+      }
+    },[store.show])
     
     const onClose=()=>{
       dispatch(ActionsModal.hideModal(EnumModals.CREATE_BOOK));
     }
 
-    const onSubmit=(data: IFormData)=>{
-      if(!state.editions.length) return;
-      if(!state.writers.length) return;
+    const createBook=(data:IFormData)=>{
       const payload:ICreateBookPayload={
         editions:state.editions,
         level:data.level,
@@ -57,6 +74,31 @@ function CreateBookModalComponent(){
           onClose();
         }
       })
+    }
+
+    const updateBook=(data:IFormData)=>{
+      const existingBook = ModalData.createBookModal.existing;
+      if(!existingBook) return;
+      existingBook.name = data.name;
+      existingBook.level = data.level;
+      existingBook.writers = state.writers;
+      existingBook.editions = state.editions;
+      ApiUpdateBook(existingBook).then(res=>{
+        if(res.response){
+          mutate(ApiRoutes.BooksAll,(data:any)=>{
+            const arr = ArrayUtil.UpdateItem(data,res.response?.data!,"_id");
+            return arr;
+          },false);
+          onClose();
+        }
+      })
+    }
+
+    const onSubmit=(data: IFormData)=>{
+      if(!state.editions.length) return;
+      if(!state.writers.length) return;
+      if(!ModalData.createBookModal.existing) createBook(data);
+      else updateBook(data);
     }
 
     const handleEditionPress=(event: React.KeyboardEvent<HTMLInputElement>)=>{
@@ -96,7 +138,7 @@ function CreateBookModalComponent(){
             <Form.Group>
               <Form.Control name="name" type="text" placeholder="Name" ref={register({required:"Name is required"})}/>
               <p className="text-danger">{errors.name?.message || ''}</p>
-              <Form.Control name="level" type="text" placeholder="Level" ref={register({required:"Level is required"})}/>
+              <Form.Control name="level"  type="text" placeholder="Level" ref={register({required:"Level is required"})}/>
               <p className="text-danger">{errors.level?.message || ''}</p>
 
               <div>

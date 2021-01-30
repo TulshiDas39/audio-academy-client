@@ -5,7 +5,6 @@ import { AdminLeftNav } from '../../common/leftNav/adminLeftNav';
 import { AdminModals } from '../../common/modals';
 import { TopNav } from '../../common/topNav';
 
-const AdminDashboard = React.lazy(() => import('../../adminDashboard/adminDashboard'));
 const Activity = React.lazy(() => import('../../activity/activity'));
 
 

@@ -115,7 +115,7 @@ function RegisterContributorModalComponent(){
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="success" type="submit" form={"registerContributorForm"}>Submit</Button>
+        <Button variant="success" type="submit" form={"registerContributorForm"} disabled={state.isBusy}>Submit</Button>
         <Button variant="danger" onClick={onClose} >Close</Button>
       </Modal.Footer>
     </Modal>

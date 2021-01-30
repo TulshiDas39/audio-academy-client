@@ -28,7 +28,7 @@ function ContributorsComponent(){
             </div>
             <div>
                 {
-                    data?.map?.((contr:any)=>(
+                    data?.map((contr)=>(
                         <Contributor key = {contr._id} user = {contr} />
                     ))
                 }

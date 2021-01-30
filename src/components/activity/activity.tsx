@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import {  UiRoutes } from '../../lib';
 import './activity.scss';
 import ItemsView from './subComponents/ItemsView';
