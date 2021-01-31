@@ -8,5 +8,11 @@ export class ArrayUtil{
           ...arr.slice(0,index),updatedItem,
           ...arr.slice(index+1)
         ]
-      }
+    }
+    static AddItemToIndex<T>(arr:T[],index:number,item:T){
+      return [
+        ...arr.slice(0,index),item,
+        ...arr.slice(index+1)
+      ]
+    }
 }
