@@ -6,6 +6,7 @@ import { EnumModals, useMultiState } from '../../../lib';
 import { IEntityBook } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
 import { ApiCreateTutorial, ApiSearchBook, ICreateTutorialPayload } from './api';
+import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
 
 interface IFormData {
@@ -35,16 +36,27 @@ function CreateTutorialModalComponent(){
         show: state.modals.openModals.includes(EnumModals.CREATE_TUTORIAL),
     }))
 
+    const {errors, register, handleSubmit,setValue} = useForm<IFormData>({
+      mode:"onSubmit",
+      reValidateMode:"onChange",
+    })
+
     const [state,setState]= useMultiState(initialState);
 
     useEffect(()=>{
       if(!store.show) setState(initialState);
+      else{
+        const existing = ModalData.createTutorialModal.existing;
+        if(existing){
+          setValue("description",existing.description);
+          setValue("title",existing.title);
+          setState({selectedBook:existing.book,
+            bookName:existing.book.name,
+            selectedBookEdition:existing.bookEdition
+          })
+        }
+      }
     },[store.show])
-
-    const {errors, register, handleSubmit} = useForm<IFormData>({
-      mode:"onSubmit",
-      reValidateMode:"onChange",
-    })
     
     const onClose=()=>{
       dispatch(ActionsModal.hideModal(EnumModals.CREATE_TUTORIAL));

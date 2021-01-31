@@ -1,5 +1,6 @@
 import { IEntityBook, IEntityUser } from "../../../lib/types/entities";
 import { IClipModel } from "../../../lib/types/models";
+import { ITutorialData } from "../../Tutorials/api";
 
 export interface IModalData{
     createClipModal:{ 
@@ -10,6 +11,9 @@ export interface IModalData{
     },
     createBookModal:{
         existing?:IEntityBook
+    },
+    createTutorialModal:{
+        existing?:ITutorialData
     }
 }
 
@@ -21,6 +25,9 @@ export const ModalData:IModalData={
         existing:undefined
     },
     createBookModal:{
+        existing:undefined
+    },
+    createTutorialModal:{
         existing:undefined
     }
     

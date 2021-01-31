@@ -9,7 +9,7 @@ import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';
 import { apiDeleteBook } from '../api';
 
-const CustomToggle = React.forwardRef<HTMLSpanElement,any>(({onClick}, ref) => (
+export const ThreeDotCustomToggle = React.forwardRef<HTMLSpanElement,any>(({onClick}, ref) => (
     <span ref={ref} onClick={onClick}>
         <FaEllipsisH className="cur-point" />
     </span>
@@ -44,7 +44,7 @@ function SingleBookComponent(props:IProps){
             <div className="d-flex">
                 <h6>{props.book.name}</h6>
                 <Dropdown className="ml-auto">
-                    <Dropdown.Toggle as={CustomToggle} id="dropdown-basic-we" />
+                    <Dropdown.Toggle as={ThreeDotCustomToggle} id="dropdown-basic-we" />
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={handleEdit}>Edit</Dropdown.Item>
                         <Dropdown.Item onClick={handleDelete}>Delete</Dropdown.Item>
