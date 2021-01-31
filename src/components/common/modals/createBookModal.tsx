@@ -72,6 +72,9 @@ function CreateBookModalComponent(){
       }
       ApiCreateBook(payload).then(res=>{
         if(res.response){
+          mutate(ApiRoutes.BooksAll,(data:any[])=>{
+            return ArrayUtil.AddItemToIndex(data,0,res.response?.data!);
+          },false);
           onClose();
         }
       })
@@ -86,7 +89,7 @@ function CreateBookModalComponent(){
       existingBook.editions = state.editions;
       ApiUpdateBook(existingBook).then(res=>{
         if(res.response){
-          mutate(ApiRoutes.BooksAll,(data:any)=>{
+          mutate(ApiRoutes.BooksAll,(data:any[])=>{
             const arr = ArrayUtil.UpdateItem(data,existingBook,"_id");
             return arr;
           },false);
