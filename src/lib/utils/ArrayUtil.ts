@@ -12,7 +12,7 @@ export class ArrayUtil{
     static AddItemToIndex<T>(arr:T[],index:number,item:T){
       return [
         ...arr.slice(0,index),item,
-        ...arr.slice(index+1)
+        ...arr.slice(index)
       ]
     }
 }
