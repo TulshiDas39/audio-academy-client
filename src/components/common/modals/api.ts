@@ -2,6 +2,7 @@ import { ApiRoutes } from "../../../lib";
 import { IClipEntity, IEntityBook, IEntityUser, ITutorialEntity } from "../../../lib/types/entities";
 import { ISearchModel } from "../../../lib/types/models";
 import { Intercept } from "../../../lib/utils/interceptor";
+import { ITutorialData } from "../../Tutorials/api";
 
 export interface ICreateContributorPayload{
     name: string;
@@ -39,6 +40,10 @@ export interface ICreateTutorialPayload{
 }
 export function ApiCreateTutorial(payload:ICreateTutorialPayload){
     return Intercept.post(ApiRoutes.Tutorial,payload);
+}
+
+export function ApiUpdateTutorial(payload:ITutorialData){
+    return Intercept.put<ITutorialData>(ApiRoutes.Tutorial,payload);
 }
 
 export interface ICreateBookPayload{

@@ -2,10 +2,12 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { Button, Dropdown, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
-import { EnumModals, useMultiState } from '../../../lib';
+import { mutate } from 'swr';
+import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { IEntityBook } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ApiCreateTutorial, ApiSearchBook, ICreateTutorialPayload } from './api';
+import { ApiGetTutorials } from '../../Tutorials/api';
+import { ApiCreateTutorial, ApiSearchBook, ApiUpdateTutorial, ICreateTutorialPayload } from './api';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
 
@@ -44,7 +46,10 @@ function CreateTutorialModalComponent(){
     const [state,setState]= useMultiState(initialState);
 
     useEffect(()=>{
-      if(!store.show) setState(initialState);
+      if(!store.show) {
+        ModalData.createTutorialModal.existing = undefined;
+        setState(initialState);
+      }
       else{
         const existing = ModalData.createTutorialModal.existing;
         if(existing){
@@ -62,7 +67,7 @@ function CreateTutorialModalComponent(){
       dispatch(ActionsModal.hideModal(EnumModals.CREATE_TUTORIAL));
     }
 
-    const onSubmit=(data: IFormData)=>{
+    const createTutorial=(data: IFormData)=>{
       const payload:ICreateTutorialPayload={
         title:data.title,
         description:data.description,
@@ -71,9 +76,36 @@ function CreateTutorialModalComponent(){
       }
       ApiCreateTutorial(payload).then(res=>{
         if(res.response){
+          mutate(ApiRoutes.TutorialAll,(data:any[])=>{
+            return ArrayUtil.AddItemToIndex(data,0,res.response?.data!);
+          },false);
           onClose();
         }
       })
+    }
+    const updateTutorial=(data: IFormData)=>{
+
+      const existing = ModalData.createTutorialModal.existing;
+      if(!existing) return;
+      existing.title = data.title;
+      existing.description = data.description;
+      if(state.selectedBook) {
+        existing.bookId = state.selectedBook._id
+        existing.bookEdition = state.selectedBookEdition;
+      }
+      ApiUpdateTutorial(existing).then(res=>{
+        if(res.response){
+          mutate(ApiRoutes.TutorialAll,(data:any[])=>{
+            return ArrayUtil.UpdateItem(data,existing,"_id");
+          });
+          onClose();
+        }        
+      })
+    }
+
+    const onSubmit=(data: IFormData)=>{
+      if(!ModalData.createTutorialModal.existing) createTutorial(data);
+      else updateTutorial(data);
     }
 
     const handleBookSearch=(e:ChangeEvent<HTMLInputElement>)=>{

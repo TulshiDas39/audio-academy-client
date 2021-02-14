@@ -21,13 +21,13 @@ function SingleTutorialComponent(props:IProps){
     }
     const handleDelete = ()=>{
         let index = -1 ;
-        mutate(ApiRoutes.BooksAll,(data:any[])=>{
+        mutate(ApiRoutes.TutorialAll,(data:any[])=>{
             index = data.findIndex(x=>x._id === props.tutorial._id);
             return data.filter(x=>x._id !== props.tutorial._id);
         },false)
         apiDeleteBook(props.tutorial._id).then(res=>{
             if(!res.response){
-                mutate(ApiRoutes.BooksAll,(data:any[])=>{
+                mutate(ApiRoutes.TutorialAll,(data:any[])=>{
                     return ArrayUtil.AddItemToIndex(data,index,props.tutorial);
                 },false)
             }

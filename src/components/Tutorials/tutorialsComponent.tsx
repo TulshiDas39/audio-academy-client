@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import useSwr from 'swr/dist';
+import useSwr from 'swr';
 import { ApiRoutes, EnumModals } from '../../lib';
 import { ActionsModal } from '../common/modals';
 import { ApiGetTutorials } from './api';
@@ -9,7 +9,12 @@ import { SingleTutorial } from './subComponents';
 
 function TutorialsComponent(){
     const dispatch = useDispatch();
-    const {data,error} = useSwr(ApiRoutes.TutorialAll,{fetcher:ApiGetTutorials});
+    const {data} = useSwr(ApiRoutes.TutorialAll,()=>{
+        return ApiGetTutorials().then(res=>{
+            if(res.response) return res.response.data;
+            throw res.error;
+        })
+    });
     console.log(data);
 
     return (
@@ -19,7 +24,7 @@ function TutorialsComponent(){
             </div>
             <div>
                 {
-                    data?.response?.data?.map(tt=>(
+                    data?.map(tt=>(
                         <SingleTutorial key={tt._id} tutorial={tt} />
                     ))
                 }
