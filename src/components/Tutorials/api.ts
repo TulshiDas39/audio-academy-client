@@ -8,3 +8,7 @@ export interface ITutorialData extends ITutorialEntity{
 export function ApiGetTutorials(){
     return Intercept.get<ITutorialData[]>(ApiRoutes.TutorialAll);
 }
+
+export function ApiDeleteTutorial(id:string){
+    return Intercept.delete<boolean>(ApiRoutes.Tutorial+"/"+id);
+}

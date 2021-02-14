@@ -9,7 +9,7 @@ import { apiDeleteBook } from '../../books/api';
 import { ThreeDotCustomToggle } from '../../books/subComponents';
 import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';
-import { ITutorialData } from '../api';
+import { ApiDeleteTutorial, ITutorialData } from '../api';
 interface IProps{
     tutorial:ITutorialData;
 }
@@ -25,7 +25,7 @@ function SingleTutorialComponent(props:IProps){
             index = data.findIndex(x=>x._id === props.tutorial._id);
             return data.filter(x=>x._id !== props.tutorial._id);
         },false)
-        apiDeleteBook(props.tutorial._id).then(res=>{
+        ApiDeleteTutorial(props.tutorial._id).then(res=>{
             if(!res.response){
                 mutate(ApiRoutes.TutorialAll,(data:any[])=>{
                     return ArrayUtil.AddItemToIndex(data,index,props.tutorial);
