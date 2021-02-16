@@ -2,10 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { IClipEntity } from '../../lib/types/entities';
-import { useMultiState } from '../../lib';
+import { EnumModals, useMultiState } from '../../lib';
 import { apiSubmitClip } from '.';
 import { Button } from 'react-bootstrap';
 import './contributorClip.scss';
+import { useDispatch } from 'react-redux';
+import { ActionsModal } from '../common/modals';
 
 interface IProps{
     clip:IClipEntity;
@@ -15,6 +17,7 @@ interface IState{
 }
 const initialState = {} as IState;
 function ContributorClipComponent(props:IProps){
+    const dispatch = useDispatch();
     const [state,setState]=useMultiState(initialState);
 
     const handleSubmit = ()=>{
@@ -31,6 +34,7 @@ function ContributorClipComponent(props:IProps){
                 <h5 className="">{props.clip.title}</h5>
                 <p className="text-secondary">Lession:{props.clip.lession}</p>
                 <p className="text-success">Description: {props.clip.description}</p>
+                <p className="text-success cur-point"> <u onClick={()=>dispatch(ActionsModal.showModal(EnumModals.BOOK_DETAILS_MODAL))}>Book Details</u></p>
                 <p>{props.clip.submissionDate ? `Submitted: ${moment(props.clip.submissionDate).format('DD MMM, YYYY')}`:`Assigned: ${moment(props.clip.createdAt).format('DD MMM, YYYY')}`}</p>
             </div>
             {!props.clip.submissionDate && <div className="col-auto d-flex justify-content-center flex-column px-5">

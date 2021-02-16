@@ -2,6 +2,7 @@ import React, { Fragment, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 import { ContributorLeftNav } from '../../common/leftNav';
+import { ContributorModals } from '../../common/modals/contributorModals';
 import { TopNav } from '../../common/topNav';
 
 const ContributorDashboard = React.lazy(() => import('../../contributorDashboard/contributorDashboard'));
@@ -29,6 +30,7 @@ function ContributorLayoutComponent() {
                     </div>
                 </div>
             </div>
+            <ContributorModals />
         </div>
     )
 }
