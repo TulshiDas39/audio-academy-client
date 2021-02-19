@@ -17,8 +17,8 @@ function SingleTutorialDetailsComponent(){
     return (
         <div>
             <div>
-                <h6>{data?.tutorial._doc.title}</h6>
-                <p>{data?.tutorial._doc.description}</p>
+                <h6>{data?.tutorial.title}</h6>
+                <p>{data?.tutorial.description}</p>
                 <Button onClick={()=>  dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Add Clip</Button>
             </div>
             <hr/>

@@ -4,7 +4,7 @@ import { IClipModel } from "../../lib/types/models";
 import { Intercept } from "../../lib/utils/interceptor";
 
 export interface IGetSingleTutorialDetails{
-    tutorial:{_doc:ITutorialEntity};
+    tutorial:ITutorialEntity;
     clips: IClipModel[];
 }
 
