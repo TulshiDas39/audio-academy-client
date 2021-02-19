@@ -10,12 +10,15 @@ import { Clip } from './subComponents/singleClip';
 function SingleTutorialDetailsComponent(){
     const dispatch = useDispatch();
     const tutorialId = window.location.pathname.split("/").pop();
-    const {data} = useSWR(tutorialId!,()=>apiGetSingleTutorialDetails(tutorialId!));
+    const {data} = useSWR(tutorialId!,()=>apiGetSingleTutorialDetails(tutorialId!).then(res=>{
+        if(res.response) return res.response.data;
+        throw res.error;
+    }));
     return (
         <div>
             <div>
-                <h6>{data?.response?.data.tutorial._doc.title}</h6>
-                <p>{data?.response?.data.tutorial._doc.description}</p>
+                <h6>{data?.tutorial._doc.title}</h6>
+                <p>{data?.tutorial._doc.description}</p>
                 <Button onClick={()=>  dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Add Clip</Button>
             </div>
             <hr/>
@@ -23,7 +26,7 @@ function SingleTutorialDetailsComponent(){
                 <h6>Clips</h6>
                 <div>
                     {
-                        data?.response?.data.clips.map(x=>(
+                        data?.clips.map(x=>(
                             <Clip key={x._id} clip={x}/>
                         ))
                     }

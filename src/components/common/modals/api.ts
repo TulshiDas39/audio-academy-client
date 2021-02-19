@@ -25,7 +25,7 @@ export interface ICreateClipPayload{
     images?: string[];
 }
 export function ApiCreateClip(payload:ICreateClipPayload){
-    return Intercept.post(ApiRoutes.Clip,payload);
+    return Intercept.post<IClipEntity>(ApiRoutes.Clip,payload);
 }
 
 export function ApiUpdateClip(payload:IClipEntity){

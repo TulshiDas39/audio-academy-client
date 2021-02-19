@@ -3,7 +3,7 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import useSWR, { mutate } from 'swr';
-import { ApiRoutes, EnumModals, useMultiState } from '../../../lib';
+import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { IClipEntity, IEntityUser, ITutorialEntity } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
 import { ApiGetAllContributors } from '../../contributors/api';
@@ -12,8 +12,9 @@ import { ActionsModal } from './reducers';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { ModalData } from './modalData';
-import { apiGetSingleTutorialDetails } from '../../singleTutorialDetails/api';
+import { apiGetSingleTutorialDetails, IGetSingleTutorialDetails } from '../../singleTutorialDetails/api';
 import { fetchContributors } from '../../contributors/contributors';
+import { IClipModel } from '../../../lib/types/models';
 
 interface IFormData{
     title: string;
@@ -37,6 +38,7 @@ const initialState={
   selectedContributor:null!,
   contributorSuggestions:[],
   fetchTriggerKey: Date.now()+"",
+  selectedDeadline:null!,
 } as IState;
 
 let preventBlur = false;
@@ -73,6 +75,7 @@ function CreateClipModalComponent(){
     const {data} = useSWR(ApiRoutes.AllContributors, fetchContributors)
     const onClose=()=>{
       dispatch(ActionsModal.hideModal(EnumModals.CREATE_CLIP));
+      setState(initialState);
     }
 
     const onSubmit=(data: IFormData)=>{
@@ -105,6 +108,15 @@ function CreateClipModalComponent(){
       }).then(res=>{
         if(res.response){
           onClose();
+          mutate(tutorialId,(data:IGetSingleTutorialDetails)=>{
+            let newClip:IClipModel = {...res.response?.data!,contributor:state.selectedContributor};
+            let newClips = ArrayUtil.AddItemToIndex(data.clips,0,newClip);
+            let newData:IGetSingleTutorialDetails={
+              ...data,
+              clips:newClips,
+            } 
+            return newData;
+          },false)
         }
       })
     }
@@ -164,7 +176,7 @@ function CreateClipModalComponent(){
                 <div className="">
                   {
                     state.contributorSuggestions.map(t=>(
-                      <div className="border rounded py-1 cur-point"
+                      <div key={t._id} className="border rounded py-1 cur-point"
                        onMouseDown={_ => preventBlur = true}
                        onMouseUp={_=> preventBlur = false}
                        onClick={_=>setState({selectedContributor:t,contributorSearchKey:t.name,contributorSuggestions:[]})}>
