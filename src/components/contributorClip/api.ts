@@ -1,5 +1,5 @@
 import { ApiRoutes } from "../../lib";
-import { IClipEntity } from "../../lib/types/entities";
+import { IClipEntity, IEntityBase, IEntityBook } from "../../lib/types/entities";
 import { ApiHelpers } from "../../lib/utils/ApiHelper";
 import { Intercept } from "../../lib/utils/interceptor";
 
@@ -18,4 +18,11 @@ export function apiSubmitClip(body: ISubClipBody){
         'Content-Type':'multipart/form-data'
     }
     return Intercept.post<IClipEntity[]>(ApiRoutes.SubmitClip,formData,config);
+}
+
+export interface IBookDetails extends IEntityBook{
+    edition:string;
+}
+export function apiGetBookDetails(clipId:string){
+    return Intercept.get<IBookDetails>(ApiRoutes.BookDetails+clipId);
 }

@@ -43,6 +43,7 @@ export class ApiRoutes{
     static AssignedClip = ApiRoutes.Clip+'/assigned';
     static SubmittedClip = ApiRoutes.Clip+'/submitted';
     static SubmitClip = ApiRoutes.Clip+'/submit';
+    static BookDetails = ApiRoutes.Clip+'/bookDetails/';
 
     static Tutorial = API_BASE_URL+"/tutorial";
     static CreateTutorial = ApiRoutes.Tutorial+"/create";

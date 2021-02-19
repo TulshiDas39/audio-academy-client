@@ -34,11 +34,6 @@ function BookDetailsModalComponent(){
 
     const [state,setState]= useMultiState(initialState);
 
-    const {errors, register, handleSubmit} = useForm<IFormData>({
-      mode:"onSubmit",
-      reValidateMode:"onChange",
-    })
-
     useEffect(()=>{
       if(!store.show) ModalData.registerContributorModal.existing = undefined;
     },[store.show])
@@ -58,7 +53,20 @@ function BookDetailsModalComponent(){
         <p>Book Details</p>
       </Modal.Header>
       <Modal.Body>
-        
+        {
+          (function(){
+            const bookDetails  = ModalData.bookDetailsModal.book;
+            if(!bookDetails) return <p>No book</p>
+            return (
+              <div>
+                <h5>Book name:{bookDetails.name}</h5>
+                <p>Authors:{bookDetails.writers.join()}</p>
+                <p>Edition: {bookDetails.edition}</p>
+              </div>
+            )
+          })()
+        }
+
       </Modal.Body>
       <Modal.Footer>
         <Button variant="danger" onClick={onClose} >Close</Button>

@@ -8,6 +8,8 @@ import { Button } from 'react-bootstrap';
 import './contributorClip.scss';
 import { useDispatch } from 'react-redux';
 import { ActionsModal } from '../common/modals';
+import { ModalData } from '../common/modals/modalData';
+import { apiGetBookDetails } from './api';
 
 interface IProps{
     clip:IClipEntity;
@@ -28,13 +30,22 @@ function ContributorClipComponent(props:IProps){
         });
     }
 
+    const showBookDetails=()=>{
+        apiGetBookDetails(props.clip._id).then(res=>{
+            if(res.response){
+                ModalData.bookDetailsModal.book = res.response.data;
+                dispatch(ActionsModal.showModal(EnumModals.BOOK_DETAILS_MODAL));
+            }
+        })
+    }
+
     return (
         <div className="contributorClip border text-center row">
             <div className="col border">
                 <h5 className="">{props.clip.title}</h5>
                 <p className="text-secondary">Lession:{props.clip.lession}</p>
                 <p className="text-success">Description: {props.clip.description}</p>
-                <p className="text-success cur-point"> <u onClick={()=>dispatch(ActionsModal.showModal(EnumModals.BOOK_DETAILS_MODAL))}>Book Details</u></p>
+                <p className="text-success cur-point"> <u onClick={showBookDetails}>Book Details</u></p>
                 <p>{props.clip.submissionDate ? `Submitted: ${moment(props.clip.submissionDate).format('DD MMM, YYYY')}`:`Assigned: ${moment(props.clip.createdAt).format('DD MMM, YYYY')}`}</p>
             </div>
             {!props.clip.submissionDate && <div className="col-auto d-flex justify-content-center flex-column px-5">
