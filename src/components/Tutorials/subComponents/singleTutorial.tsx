@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, UiRoutes } from '../../../lib';
-import { apiDeleteBook } from '../../books/api';
 import { ThreeDotCustomToggle } from '../../books/subComponents';
 import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';

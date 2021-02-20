@@ -11,3 +11,7 @@ export interface IGetSingleTutorialDetails{
 export function apiGetSingleTutorialDetails(tutorialId:string){
     return Intercept.get<IGetSingleTutorialDetails>(ApiRoutes.Tutorial+"/byId/"+tutorialId);
 }
+
+export function apiDeleteClip(id:string){
+    return Intercept.delete<boolean>(ApiRoutes.Clip+"/"+id);
+}
