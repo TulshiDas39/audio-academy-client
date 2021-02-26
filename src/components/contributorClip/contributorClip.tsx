@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import moment from 'moment';
-import { FaCloudUploadAlt } from 'react-icons/fa';
+import { FaCloudUploadAlt, FaFileAlt } from 'react-icons/fa';
 import { IClipEntity } from '../../lib/types/entities';
 import { EnumModals, useMultiState } from '../../lib';
 import { apiSubmitClip } from '.';
@@ -47,21 +47,30 @@ function ContributorClipComponent(props:IProps){
                 <p className="text-success">Description: {props.clip.description}</p>
                 <p className="text-success cur-point"> <u onClick={showBookDetails}>Book Details</u></p>
                 <p>{props.clip.submissionDate ? `Submitted: ${moment(props.clip.submissionDate).format('DD MMM, YYYY')}`:`Assigned: ${moment(props.clip.createdAt).format('DD MMM, YYYY')}`}</p>
+
             </div>
-            {!props.clip.submissionDate && <div className="col-auto d-flex justify-content-center flex-column px-5">
-                {!state.file && <label htmlFor="upload-file">
-                    <FaCloudUploadAlt title="Upload file" className="text-info display-1 cur-point my-auto" />
-                </label>} 
-                <input type="file" id="upload-file" className="d-none" multiple={false} accept=".mp3,audio/*" onChange={(e)=>{setState({file:e.target?.files?.[0] as File})}} />
-                
+            <div className="col-auto d-flex justify-content-center flex-column px-5">
                 {
-                    !! state.file && <p>{state.file.name} <span className="cur-point hover-primary" onClick={()=>setState({file: undefined})}>&times;</span></p>
+                    !props.clip.submissionDate?<Fragment>
+                        {!state.file && <label htmlFor="upload-file">
+                            <FaCloudUploadAlt title="Upload file" className="text-info display-1 cur-point my-auto" />
+                        </label>}
+                        <input type="file" id="upload-file" className="d-none" multiple={false} accept=".mp3,audio/*" onChange={(e) => { setState({ file: e.target?.files?.[0] as File }) }} />
+
+                        {
+                            !!state.file && <p>{state.file.name} <span className="cur-point hover-primary" onClick={() => setState({ file: undefined })}>&times;</span></p>
+                        }
+                        {
+                            !!state.file && <Button className="w-75 mx-auto" onClick={handleSubmit}>Submit</Button>
+                        }
+                    </Fragment>:
+                    <div>
+                        <FaFileAlt className="h1 cur-point text-success" title="Download submitted file" />
+                    </div>
                 }
-                {
-                    !! state.file && <Button className="w-25 mx-auto" onClick={handleSubmit}>Submit</Button>
-                }
-                
-            </div>}
+               
+            </div>
+            
         </div>
     )
 }
