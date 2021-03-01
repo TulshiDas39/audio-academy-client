@@ -2,7 +2,7 @@ import React, { Fragment, useCallback } from 'react';
 import moment from 'moment';
 import { FaCloudUploadAlt, FaFileAlt } from 'react-icons/fa';
 import { IClipEntity } from '../../lib/types/entities';
-import { apiDownloadFile, DownloadAudio, EnumModals, getFileName, triggerDownloadFromBlob, useMultiState } from '../../lib';
+import { apiDownloadFile, DownloadAudio, EnumModals, getFileName, useMultiState } from '../../lib';
 import { apiSubmitClip } from '.';
 import { Button } from 'react-bootstrap';
 import './contributorClip.scss';
@@ -27,6 +27,8 @@ function ContributorClipComponent(props:IProps){
         apiSubmitClip({
             clipId:props.clip._id,
             file:state.file,
+        }).then(res=>{
+            if(res.response) dispatch(ActionsModal.showModal(EnumModals.TOAST));
         });
     }
 
@@ -71,7 +73,10 @@ function ContributorClipComponent(props:IProps){
                         }
                     </Fragment>:
                     <div>
-                        <FaFileAlt className="h1 cur-point text-success" title="Download submitted file" onClick={downloadFile} />
+                        <div className="d-flex flex-column">
+                            <FaFileAlt className="h1 cur-point text-success mx-auto" title="Download submitted file" onClick={downloadFile} />
+                            <span className="mx-auto small bg-secondary rounded px-3 text-white py-1 cur-point" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.RESUBMIT_CLIP))}>Re-Submit</span>
+                        </div>                        
                     </div>
                 }
                

@@ -18,7 +18,16 @@ export interface IModalData{
     },
     bookDetailsModal:{
         book?:IBookDetails
+    },
+    AppToast:{
+        title?: string;
+        message: string;
+        customClass?: string;
+    },
+    resubmitModal:{
+        clip?:IClipModel;
     }
+
 }
 
 export const ModalData:IModalData={
@@ -36,6 +45,12 @@ export const ModalData:IModalData={
     },
     bookDetailsModal:{
         book:null!,
+    },
+    AppToast:{
+        message:"",
+    },
+    resubmitModal:{
+        
     }
     
 }
