@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import moment from 'moment';
 import { FaCloudUploadAlt, FaFileAlt } from 'react-icons/fa';
 import { IClipEntity } from '../../lib/types/entities';
-import { EnumModals, useMultiState } from '../../lib';
+import { apiDownloadFile, DownloadAudio, EnumModals, triggerDownloadFromBlob, useMultiState } from '../../lib';
 import { apiSubmitClip } from '.';
 import { Button } from 'react-bootstrap';
 import './contributorClip.scss';
@@ -39,6 +39,12 @@ function ContributorClipComponent(props:IProps){
         })
     }
 
+    const downloadFile = useCallback(()=>{
+        apiDownloadFile(props.clip.fileId!).then(res=>{
+            if(res.response) DownloadAudio(res.response?.data,"clip.mp3");
+        })
+    },[])
+
     return (
         <div className="contributorClip border text-center row">
             <div className="col border">
@@ -65,7 +71,7 @@ function ContributorClipComponent(props:IProps){
                         }
                     </Fragment>:
                     <div>
-                        <FaFileAlt className="h1 cur-point text-success" title="Download submitted file" />
+                        <FaFileAlt className="h1 cur-point text-success" title="Download submitted file" onClick={downloadFile} />
                     </div>
                 }
                

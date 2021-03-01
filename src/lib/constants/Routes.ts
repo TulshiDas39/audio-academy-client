@@ -53,5 +53,8 @@ export class ApiRoutes{
     static Book = API_BASE_URL+'/book';
     static BookSearch = ApiRoutes.Book+"/search";
     static BooksAll = ApiRoutes.Book+'/all';
+
+    static File = API_BASE_URL+'/file';
+    static FileDownload = ApiRoutes.File+'/download/';
  
 }
