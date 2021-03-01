@@ -2,7 +2,7 @@ import React, { Fragment, useCallback } from 'react';
 import moment from 'moment';
 import { FaCloudUploadAlt, FaFileAlt } from 'react-icons/fa';
 import { IClipEntity } from '../../lib/types/entities';
-import { apiDownloadFile, DownloadAudio, EnumModals, triggerDownloadFromBlob, useMultiState } from '../../lib';
+import { apiDownloadFile, DownloadAudio, EnumModals, getFileName, triggerDownloadFromBlob, useMultiState } from '../../lib';
 import { apiSubmitClip } from '.';
 import { Button } from 'react-bootstrap';
 import './contributorClip.scss';
@@ -41,7 +41,7 @@ function ContributorClipComponent(props:IProps){
 
     const downloadFile = useCallback(()=>{
         apiDownloadFile(props.clip.fileId!).then(res=>{
-            if(res.response) DownloadAudio(res.response?.data,"clip.mp3");
+            if(res.response) DownloadAudio(res.response?.data, getFileName(res.response) || "clip.mp3");
         })
     },[])
 

@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export function triggerDownloadFromBlob(file: Blob, fileName?: string) {
     var link = document.createElement("a");
     var objurl = URL.createObjectURL(file);
@@ -24,3 +26,14 @@ export function DownloadAudio(file: Blob,fileName?:string): void {
    };
    link.click();
  }
+
+ export function getFileName(response:AxiosResponse<any>){
+     let headerLine = response.headers['Content-Disposition'];
+     if(!headerLine) return "";
+     let startFileNameIndex = headerLine.indexOf('"') + 1
+     let endFileNameIndex = headerLine.lastIndexOf('"');
+     let filename = headerLine.substring(startFileNameIndex, endFileNameIndex);
+     return filename;
+    //  response.data.pipe(fs.createWriteStream(filename));
+}
+
