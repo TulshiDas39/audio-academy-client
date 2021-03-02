@@ -6,8 +6,7 @@ import useSWR, { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { IClipEntity, IEntityUser, ITutorialEntity } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ApiGetAllContributors } from '../../contributors/api';
-import { ApiCreateClip, ApiSearchTutorial, ApiUpdateClip, ICreateClipPayload } from './api';
+import { ApiCreateClip, ApiUpdateClip } from './api';
 import { ActionsModal } from './reducers';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
@@ -96,7 +95,10 @@ function CreateClipModalComponent(){
         ApiUpdateClip(payload).then(res=>{
           if(res.response) {
             onClose();
-            mutate(tutorialId,apiGetSingleTutorialDetails(tutorialId),false)
+            mutate(tutorialId,apiGetSingleTutorialDetails(tutorialId).then(res=>{
+              if(res.response) return res.response.data;
+              throw res.error;
+            }),false)
           }
         });
       }
