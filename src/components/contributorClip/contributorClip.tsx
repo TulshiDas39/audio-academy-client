@@ -47,6 +47,11 @@ function ContributorClipComponent(props:IProps){
         })
     },[])
 
+    const showResubmodal=()=>{
+        ModalData.resubmitModal.clip=props.clip;
+        dispatch(ActionsModal.showModal(EnumModals.RESUBMIT_CLIP));
+    }
+
     return (
         <div className="contributorClip border text-center row">
             <div className="col border">
@@ -75,7 +80,7 @@ function ContributorClipComponent(props:IProps){
                     <div>
                         <div className="d-flex flex-column">
                             <FaFileAlt className="h1 cur-point text-success mx-auto" title="Download submitted file" onClick={downloadFile} />
-                            <span className="mx-auto small bg-secondary rounded px-3 text-white py-1 cur-point" onClick={()=>dispatch(ActionsModal.showModal(EnumModals.RESUBMIT_CLIP))}>Re-Submit</span>
+                            <span className="mx-auto small bg-secondary rounded px-3 text-white py-1 cur-point" onClick={showResubmodal}>Re-Submit</span>
                         </div>                        
                     </div>
                 }

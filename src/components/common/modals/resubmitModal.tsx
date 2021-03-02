@@ -13,9 +13,10 @@ interface IState{
   isBusy:boolean,
 }
 
-const initialState={
+const initialState:IState={
   isBusy:false,
-} as IState;
+  file:undefined,
+};
 
 function ResubmitModalComponent(){
     const Data = ModalData.resubmitModal;
@@ -27,7 +28,7 @@ function ResubmitModalComponent(){
     const [state,setState]= useMultiState(initialState);
 
     useEffect(()=>{
-      if(!store.show) ModalData.registerContributorModal.existing = undefined;
+      if(!store.show) setState(initialState);
     },[store.show])
     
     const onClose=()=>{
@@ -41,7 +42,11 @@ function ResubmitModalComponent(){
           clipId:Data.clip._id,
           file:state.file,
       }).then(res=>{
-          if(res.response) dispatch(ActionsModal.showModal(EnumModals.RESUBMIT_CLIP));
+          if(res.response) {
+            dispatch(ActionsModal.hideModal(EnumModals.RESUBMIT_CLIP));
+            ModalData.AppToast.message="Resubmitted successfully"
+            dispatch(ActionsModal.showModal(EnumModals.TOAST));
+          }
       });
   }
 
@@ -60,7 +65,7 @@ function ResubmitModalComponent(){
           (function(){
             return (
               <div className="text-center">
-                {!state.file && <label htmlFor="upload-file-resubmit mx-auto">
+                {!state.file && <label htmlFor="upload-file-resubmit">
                             <FaCloudUploadAlt title="Upload file" className="text-info display-1 cur-point my-auto" />
                         </label>}
                         <input type="file" id="upload-file-resubmit" className="d-none" multiple={false} accept=".mp3,audio/*" onChange={(e) => { setState({ file: e.target?.files?.[0] as File }) }} />

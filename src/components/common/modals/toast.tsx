@@ -16,7 +16,7 @@ function ToastComponent(){
         if(!store.show) {}
     },[store.show])
     const closeToast=()=>{
-        dispatch(ActionsModal.showModal(EnumModals.TOAST));
+        dispatch(ActionsModal.hideModal(EnumModals.TOAST));
     }
     return (
         <Toast onClose={closeToast} show={store.show} delay={3000} autohide animation 
