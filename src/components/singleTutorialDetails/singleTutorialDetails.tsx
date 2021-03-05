@@ -17,13 +17,15 @@ function SingleTutorialDetailsComponent(){
     return (
         <div>
             <div>
-                <h6>{data?.tutorial.title}</h6>
+                <h6 className="mt-2">{data?.tutorial.title}</h6>
                 <p>{data?.tutorial.description}</p>
-                <Button onClick={()=>  dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Add Clip</Button>
+                <div className="text-right">
+                    <Button onClick={()=>  dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Add Clip</Button>
+                </div>
             </div>
             <hr/>
             <div>
-                <h6>Clips</h6>
+                <h6 className="mb-3">Clips</h6>
                 <div>
                     {
                         data?.clips.map(x=>(

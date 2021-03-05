@@ -40,7 +40,7 @@ function SingleBookComponent(props:IProps){
         })
     }
     return (
-        <div className="bg-white border rounded p-2">
+        <div className="bg-white border rounded p-2 my-2">
             <div className="d-flex">
                 <h6>{props.book.name}</h6>
                 <Dropdown className="ml-auto">
@@ -53,6 +53,7 @@ function SingleBookComponent(props:IProps){
             </div>
             <p>{props.book.level}</p>
             <p>{props.book.writers.join()}</p>
+            <p>Editions: {props.book.editions.join()}</p>
         </div>
     )
 }

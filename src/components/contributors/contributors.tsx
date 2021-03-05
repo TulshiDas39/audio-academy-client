@@ -23,7 +23,7 @@ function ContributorsComponent(){
     console.log(data);
     return (
         <div>
-            <div>
+            <div className="text-right py-2">
                 <Button onClick={()=> dispatch(ActionsModal.showModal(EnumModals.REGISTER_CONTRIBUTOR))} >Add Contributor</Button>
             </div>
             <div>

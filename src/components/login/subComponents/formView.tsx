@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AuthStorage, EnumLocalStoreKey, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { apiLogin, TApiLoginRequest } from '../api';
-import { batch, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ActionLogin } from '../reducer';
 import { ThunkLogin } from '../thunk';
 
@@ -20,6 +20,7 @@ type TState={
     showPassword:boolean;
     isBusy:boolean;
     loginSuccess:boolean;
+    error?:string;
 }
 
 const initialState:TState={
@@ -28,17 +29,17 @@ const initialState:TState={
     showPassword:false,
     isBusy:false,
     loginSuccess:false,
+    error:undefined,
 }
 
 function FormViewComponent(){
-    const { register,errors,handleSubmit } = useForm<FormInputs>({
+    const { register,errors,handleSubmit} = useForm<FormInputs>({
         mode: 'onSubmit',
         reValidateMode:"onChange",
         defaultValues: {},
     })
 
-    const history = useHistory();
-    const dispath = useDispatch();
+    const dispatch = useDispatch();
 
     const onSubmit=(data:FormInputs) => {
            console.log(data);
@@ -51,9 +52,10 @@ function FormViewComponent(){
                setState({isBusy:false});
                if(res.response){
                    AuthStorage.setValue(EnumLocalStoreKey.TOKEN, res.response.data.access_token);
-                   dispath(ThunkLogin.GetProfile({updatedResponse:res.response.data.profile}))
-                   dispath(ActionLogin.setLoginState(true));                   
+                   dispatch(ThunkLogin.GetProfile({updatedResponse:res.response.data.profile}))
+                   dispatch(ActionLogin.setLoginState(true));                   
                }
+               else setState({error:res.error?.message});
            })
     }
     
@@ -80,7 +82,8 @@ function FormViewComponent(){
                 <div className="text-center">
                     <FaHeadphones className="display-1 text-primary" />
                 </div>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                {!!state.error && <p className="text-danger text-center">{state.error}</p>}
+                <Form onSubmit={handleSubmit(onSubmit)} onChange={()=>setState({error:undefined})}>
                     <Form.Group>
                         <Form.Control className="mt-2" type="email" name="email" 
                             value={state.email} onChange={setInputValue} placeholder="Email" 
@@ -95,15 +98,15 @@ function FormViewComponent(){
 
                         {!!errors.password && <p className="mt-0 text-danger">{errors.password.message}</p>}
                         <Button className="mb-2" type="submit" disabled={state.isBusy}>Sign in</Button>
-                        <p><Link to={UiRoutes.ForgotPassword} >Forgot Password</Link></p>
+                        {/* <p><Link to={UiRoutes.ForgotPassword} >Forgot Password</Link></p> */}
                     </Form.Group>
                     <hr/>
-                    <p className="text-center text-info">Don't have an account?</p>
+                    {/* <p className="text-center text-info">Don't have an account?</p>
                     <p className="text-center">
                         <Link to={UiRoutes.SingUp} className="h2 bg-success text-white px-2 text-decoration-none rounded">
                             Create Account
                         </Link>
-                    </p>
+                    </p> */}
                 </Form>
             </Col>
         </Row>

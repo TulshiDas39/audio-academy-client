@@ -4,15 +4,20 @@ import { FaHeadphones, FaUserCircle } from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Constants, UiRoutes } from '../../../lib';
-import { ActionAppReset } from '../../../store/rootReducer';
+import { useSelectorTyped } from '../../../store/rootReducer';
 import { ThunkLogin } from '../../login/thunk';
 import './contributorTopNav.scss';
 
-const CustomToggle = React.forwardRef<HTMLSpanElement,any>(({onClick}, ref) => (
-    <span ref={ref} onClick={onClick}>
-        <FaUserCircle className="cur-point" />
-    </span>
-  ));
+const CustomToggle = React.forwardRef<HTMLSpanElement,any>(({onClick}, ref) => {
+    const store = useSelectorTyped(state=>({
+        apiProfileVersion:state.api.getProfile.version,
+    }))
+    return (
+        <span ref={ref} onClick={onClick} className="cur-point">
+            <span title={ThunkLogin.Profile.name}>{ThunkLogin.Profile?.name?.split?.(" ")?.[0]}</span>
+            <FaUserCircle className="" />
+        </span>
+  )});
 
 function TopNavComponent(){
 
