@@ -45,6 +45,11 @@ function ClipComponent(props:IProps){
         })
     }
 
+    const showContributorDetails=()=>{
+        ModalData.userProfileModal.user = props.clip.contributor;
+        dispatch(ActionsModal.showModal(EnumModals.USER_PROFILE));
+    }
+
     return( <div className="border rounded bg-white p-2 mb-1">
         <div className="d-flex">
             <h6 className="flex-grow-1">{props.clip.title}</h6>
@@ -62,7 +67,7 @@ function ClipComponent(props:IProps){
         </div>
         <p>Lesson: {props.clip.lession}</p>
         <p>{props.clip.description}</p>
-        {props.clip.contributor && <p> Contributor: {props.clip.contributor?.name}</p>}
+        {props.clip.contributor && <p> Contributor: <u className="text-info cur-point" onClick={showContributorDetails}>{props.clip.contributor?.name}</u></p>}
         {props.clip.deadline && <p> Deadline: {moment(props.clip.deadline).format('DD, MMM YYYY')}</p>}
         {props.clip.submissionDate &&
         <div className="d-flex">

@@ -26,6 +26,10 @@ export interface IModalData{
     },
     resubmitModal:{
         clip?:IClipModel;
+    },
+    userProfileModal:{
+        user?:IEntityUser;
+        userId?:string;
     }
 
 }
@@ -50,6 +54,9 @@ export const ModalData:IModalData={
         message:"",
     },
     resubmitModal:{
+        
+    },
+    userProfileModal:{
         
     }
     
