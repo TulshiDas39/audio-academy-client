@@ -16,16 +16,13 @@ const initialState = {} as IState;
 function AdminClipComponent(props:IProps){
     const [state,setState]=useMultiState(initialState);
 
-    const handleSubmit = ()=>{
-        if(!state.file) return;
-    }
-
     return (
         <div className="contributorClip border text-center row">
             <div className="col border">
                 <h5 className="">{props.clip.title}</h5>
                 <p className="text-secondary">Lession:{props.clip.lession}</p>
                 <p className="text-success">Description: {props.clip.description}</p>
+                {/* submissionDate */}
                 <p>{props.clip.submissionDate ? `Submitted: ${moment(props.clip.submissionDate).format('DD MMM, YYYY')}`:`Assigned: ${moment(props.clip.createdAt).format('DD MMM, YYYY')}`}</p>
             </div>
         </div>

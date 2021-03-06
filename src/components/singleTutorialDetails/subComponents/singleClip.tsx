@@ -3,7 +3,7 @@ import React from 'react';
 import { Dropdown } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
-import { ArrayUtil, EnumModals } from '../../../lib';
+import { apiDownloadFile, ArrayUtil, DownloadAudio, EnumModals, getFileName } from '../../../lib';
 import { IClipModel } from '../../../lib/types/models';
 import { ThreeDotCustomToggle } from '../../books/subComponents';
 import { ActionsModal } from '../../common/modals';
@@ -39,7 +39,13 @@ function ClipComponent(props:IProps){
         })
     }
 
-    return( <div className="border rounded bg-white p-1 mb-1">
+    const downloadFile = ()=>{
+        apiDownloadFile(props.clip.fileId!).then(res=>{
+            if(res.response) DownloadAudio(res.response?.data, getFileName(res.response) || "clip.mp3");
+        })
+    }
+
+    return( <div className="border rounded bg-white p-2 mb-1">
         <div className="d-flex">
             <h6 className="flex-grow-1">{props.clip.title}</h6>
             {/* <span onClick={()=>{
@@ -58,6 +64,12 @@ function ClipComponent(props:IProps){
         <p>{props.clip.description}</p>
         {props.clip.contributor && <p> Contributor: {props.clip.contributor?.name}</p>}
         {props.clip.deadline && <p> Deadline: {moment(props.clip.deadline).format('DD, MMM YYYY')}</p>}
+        {props.clip.submissionDate &&
+        <div className="d-flex">
+             <p className="flex-grow-1"> Submission date: {moment(props.clip.submissionDate).format('DD, MMM YYYY')}</p>
+             <p className="text-primary cur-point"><u onClick={downloadFile}>Download audio</u></p>
+        </div>
+         }
     </div>)
 }
 
