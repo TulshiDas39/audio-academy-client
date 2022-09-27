@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FocusEvent, useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import useSWR, { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { IClipEntity, IEntityUser, ITutorialEntity } from '../../../lib/types/entities';
@@ -14,6 +13,7 @@ import { ModalData } from './modalData';
 import { apiGetSingleTutorialDetails, IGetSingleTutorialDetails } from '../../singleTutorialDetails/api';
 import { fetchContributors } from '../../contributors/contributors';
 import { IClipModel } from '../../../lib/types/models';
+import { useDispatchTyped } from '../../../store/store';
 
 interface IFormData{
     title: string;
@@ -43,7 +43,7 @@ const initialState={
 let preventBlur = false;
 
 function CreateClipModalComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         show: state.modals.openModals.includes(EnumModals.CREATE_CLIP),
     }))

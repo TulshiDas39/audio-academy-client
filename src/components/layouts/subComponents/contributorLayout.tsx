@@ -1,5 +1,5 @@
-import React, { Fragment, Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Route, Routes } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 import { ContributorLeftNav } from '../../common/leftNav';
 import { ContributorModals } from '../../common/modals/contributorModals';
@@ -22,10 +22,10 @@ function ContributorLayoutComponent() {
                     </div>
                     <div className="col">
                         <Suspense fallback={null}>
-                            <Switch>
-                                <Route path={UiRoutes.ContributorDashBoard} exact component={ContributorDashboard} />
-                                <Route path={UiRoutes.Submitted} exact component={Saved} />
-                            </Switch>
+                            <Routes>
+                                <Route path={UiRoutes.ContributorDashBoard} element={<ContributorDashboard />} />
+                                <Route path={UiRoutes.Submitted} element={<Saved />} />
+                            </Routes>
                         </Suspense>
                     </div>
                 </div>

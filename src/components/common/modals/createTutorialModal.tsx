@@ -1,12 +1,11 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { Button, Dropdown, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { IEntityBook } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
-import { ApiGetTutorials } from '../../Tutorials/api';
+import { useDispatchTyped } from '../../../store/store';
 import { ApiCreateTutorial, ApiSearchBook, ApiUpdateTutorial, ICreateTutorialPayload } from './api';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
@@ -33,7 +32,7 @@ const initialState={
 let preventBlur = false;
 
 function CreateTutorialModalComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         show: state.modals.openModals.includes(EnumModals.CREATE_TUTORIAL),
     }))

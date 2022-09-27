@@ -3,12 +3,13 @@ import { Toast } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { EnumModals } from '../../../lib';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
 
 
 function ToastComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped(state=>({
         show:state.modals.openModals.includes(EnumModals.TOAST),
     }))

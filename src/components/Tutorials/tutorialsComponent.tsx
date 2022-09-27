@@ -1,14 +1,14 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import useSwr from 'swr';
 import { ApiRoutes, EnumModals } from '../../lib';
+import { useDispatchTyped } from '../../store/store';
 import { ActionsModal } from '../common/modals';
 import { ApiGetTutorials } from './api';
 import { SingleTutorial } from './subComponents';
 
 function TutorialsComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const {data} = useSwr(ApiRoutes.TutorialAll,()=>{
         return ApiGetTutorials().then(res=>{
             if(res.response) return res.response.data;

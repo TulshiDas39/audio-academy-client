@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import { ApiRoutes, EnumModals } from '../../lib';
+import { useDispatchTyped } from '../../store/store';
 import { ActionsModal } from '../common/modals';
 import { apiGetBooks } from './api';
 import { SingleBook } from './subComponents';
@@ -16,7 +16,7 @@ const fetchBooks=()=>{
 
 function BooksComponent(){
     const {data} = useSWR(ApiRoutes.BooksAll,fetchBooks);
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     return (
         <div>
             <div>

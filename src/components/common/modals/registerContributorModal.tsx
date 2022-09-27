@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
-import { IEntityUser } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { ApiCreateContributor, ApiUpdateUser, ICreateContributorPayload } from './api';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
@@ -27,7 +26,7 @@ const initialState={
 } as IState;
 
 function RegisterContributorModalComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         show: state.modals.openModals.includes(EnumModals.REGISTER_CONTRIBUTOR),
     }))

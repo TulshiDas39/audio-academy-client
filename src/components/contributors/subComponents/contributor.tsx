@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals } from '../../../lib';
 import { IEntityUser } from '../../../lib/types/entities';
+import { useDispatchTyped } from '../../../store/store';
 import { ThreeDotCustomToggle } from '../../books/subComponents';
 import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';
@@ -14,7 +15,7 @@ interface IProps{
 }
 
 function ContributorComponent(props:IProps){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const handleEdit=()=>{
         ModalData.registerContributorModal.existing=props.user;
         dispatch(ActionsModal.showModal(EnumModals.REGISTER_CONTRIBUTOR));

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 
 const Login = React.lazy(()=>import('../../login/login'));
@@ -10,11 +10,11 @@ function UnAuthenticatedLayoutComponent(){
     console.log('rendering');
     return (
         <Suspense fallback={null}>
-            <Switch>
-                <Route path={UiRoutes.Login} exact component={Login} />
-                <Route path={UiRoutes.SingUp} exact component={Signup} />
-                <Route component={NotFound}/>
-            </Switch>
+            <Routes>
+                <Route path={UiRoutes.Login} element={<Login />} />
+                <Route path={UiRoutes.SingUp} element={<Signup />} />
+                <Route element={<NotFound />}/>
+            </Routes>
         </Suspense>
     )
 }

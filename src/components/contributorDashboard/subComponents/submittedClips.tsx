@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { ContributorClip } from '../../contributorClip';
 import { ThunkContributorDashboard } from '../thunk';
 
 function SubmittedClipsComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         getAllClips: state.api.getAllClips   
     }))

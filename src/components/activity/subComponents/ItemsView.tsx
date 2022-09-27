@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 import { SingleTutorialDetails } from '../../singleTutorialDetails';
 
@@ -11,12 +11,12 @@ function ItemsViewComponent() {
     return (
         <div className="viewPart overflow-auto">
             <Suspense fallback={null}>
-                <Switch>
-                    <Route component={Tutorials} exact path={`(${UiRoutes.Tutorials}|${UiRoutes.Items})`} />
-                    <Route component={SingleTutorialDetails} exact path={UiRoutes.SingleTutorialDetails} />
-                    <Route component={Books} exact path={UiRoutes.Books} />
-                    <Route component={Contributors} exact path={UiRoutes.Contributors} />
-                </Switch>
+                <Routes>
+                    <Route element={<Tutorials/>} path={`(${UiRoutes.Tutorials}|${UiRoutes.Items})`} />
+                    <Route element={<SingleTutorialDetails />} path={UiRoutes.SingleTutorialDetails} />
+                    <Route element={<Books />} path={UiRoutes.Books} />
+                    <Route element={<Contributors />} path={UiRoutes.Contributors} />
+                </Routes>
             </Suspense>
         </div>
     )

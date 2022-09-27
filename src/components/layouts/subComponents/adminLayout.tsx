@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { UiRoutes } from '../../../lib';
 import { AdminLeftNav } from '../../common/leftNav/adminLeftNav';
 import { AdminModals } from '../../common/modals';
@@ -20,10 +20,10 @@ function AdminLayoutComponent() {
                     </div>
                     <div className="col h-100">
                         <Suspense fallback={null}>
-                            <Switch>
+                            <Routes>
                                 {/* <Route path={UiRoutes.AdminDashBoard} exact component={AdminDashboard} /> */}
-                                <Route path={UiRoutes.AdminDashBoard} component={Activity} />
-                            </Switch>
+                                <Route path={UiRoutes.AdminDashBoard} element={<Activity/>} />
+                            </Routes>
                         </Suspense>
                     </div>
                 </div>

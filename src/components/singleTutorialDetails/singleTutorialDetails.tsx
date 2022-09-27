@@ -3,6 +3,7 @@ import { Button, ButtonGroup, ToggleButton } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import { EnumModals, useMultiState } from '../../lib';
+import { useDispatchTyped } from '../../store/store';
 import { ActionsModal } from '../common/modals';
 import { apiGetSingleTutorialDetails } from './api';
 import { Clip } from './subComponents/singleClip';
@@ -34,7 +35,7 @@ const initialState:IState={
     selectedFilterButton:filterButtons[0],
 }
 function SingleTutorialDetailsComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const [state,setState]=useMultiState(initialState);
     const tutorialId = window.location.pathname.split("/").pop();
     const {data} = useSWR(tutorialId!,()=>apiGetSingleTutorialDetails(tutorialId!).then(res=>{
@@ -55,7 +56,7 @@ function SingleTutorialDetailsComponent(){
                     <Button onClick={()=>  dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP))}>Add Clip</Button>
                 </div>
                 <div>
-                    <ButtonGroup toggle>
+                    <ButtonGroup >
                         {filterButtons.map((radio, idx) => (
                             <ToggleButton
                                 key={idx}

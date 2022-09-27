@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, useMultiState } from '../../../lib';
 import { IEntityBook } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { ApiCreateBook, ApiUpdateBook, ICreateBookPayload } from './api';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
@@ -30,7 +30,7 @@ const initialState={
 } as IState;
 
 function CreateBookModalComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         show: state.modals.openModals.includes(EnumModals.CREATE_BOOK),
     }))

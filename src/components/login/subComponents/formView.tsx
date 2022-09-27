@@ -1,13 +1,12 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
-import { AuthStorage, EnumLocalStoreKey, UiRoutes, useMultiState } from '../../../lib';
+import { AuthStorage, EnumLocalStoreKey, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
 import { apiLogin, TApiLoginRequest } from '../api';
-import { useDispatch } from 'react-redux';
 import { ActionLogin } from '../reducer';
 import { ThunkLogin } from '../thunk';
+import { useDispatchTyped } from '../../../store/store';
 
 type FormInputs = {
     email: string;
@@ -39,7 +38,7 @@ function FormViewComponent(){
         defaultValues: {},
     })
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
 
     const onSubmit=(data:FormInputs) => {
            console.log(data);

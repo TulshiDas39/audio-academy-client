@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Constants, UiRoutes } from '../../../lib';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { ThunkLogin } from '../../login/thunk';
 import './contributorTopNav.scss';
 
@@ -21,7 +22,7 @@ const CustomToggle = React.forwardRef<HTMLSpanElement,any>(({onClick}, ref) => {
 
 function TopNavComponent(){
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
 
     const handleLogout=()=>{
         dispatch(ThunkLogin.Logout())

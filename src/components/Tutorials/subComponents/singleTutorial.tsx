@@ -1,10 +1,10 @@
 import moment from 'moment';
 import React from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals, UiRoutes } from '../../../lib';
+import { useDispatchTyped } from '../../../store/store';
 import { ThreeDotCustomToggle } from '../../books/subComponents';
 import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';
@@ -13,7 +13,7 @@ interface IProps{
     tutorial:ITutorialData;
 }
 function SingleTutorialComponent(props:IProps){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const handleEdit = ()=>{
         ModalData.createTutorialModal.existing = {...props.tutorial};
         dispatch(ActionsModal.showModal(EnumModals.CREATE_TUTORIAL));

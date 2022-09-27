@@ -1,13 +1,13 @@
 import React, { ChangeEvent, useCallback } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthStorage, EnumLocalStoreKey, EnumUserType, UiRoutes, useMultiState } from '../../../lib';
 import {FaHeadphones} from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
 import { IApiSignUpRequest } from '../typing/apiModels';
 import { apiSignUp } from '../api';
 import { ActionLogin } from '../../login/reducer';
+import { useDispatchTyped } from '../../../store/store';
 
 interface IFormInputs extends IApiSignUpRequest{
 };
@@ -29,8 +29,8 @@ function FormViewComponent(){
         defaultValues: {},
     })
 
-    const history = useHistory();
-    const dispath = useDispatch();
+    const navigate = useNavigate();
+    const dispath = useDispatchTyped();
 
     const onSubmit=(data:IFormInputs) => {
            setState({isBusy:true});
@@ -39,7 +39,7 @@ function FormViewComponent(){
                if(res.response) {
                    AuthStorage.setValue(EnumLocalStoreKey.TOKEN, res.response.data.access_token);
                    dispath(ActionLogin.setLoginState(true));
-                   history.push(UiRoutes.ContributorDashBoard);
+                   navigate(UiRoutes.ContributorDashBoard);
                 }
            })       
     }

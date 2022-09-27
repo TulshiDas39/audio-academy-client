@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { EnumModals, useMultiState } from '../../../lib';
 import { IEntityUser } from '../../../lib/types/entities';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
 
@@ -19,7 +20,7 @@ const initialState={
 
 function UserProfileModalComponent(){
     const Data = ModalData.userProfileModal;
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         show: state.modals.openModals.includes(EnumModals.USER_PROFILE),
     }))

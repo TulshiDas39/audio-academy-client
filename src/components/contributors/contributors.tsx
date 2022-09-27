@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import useSwr from 'swr';
 import { ApiRoutes, EnumModals } from '../../lib';
+import { useDispatchTyped } from '../../store/store';
 import { ActionsModal } from '../common/modals';
 import { ApiGetAllContributors } from './api';
 import { Contributor } from './subComponents/contributor';
@@ -17,7 +18,7 @@ export const fetchContributors=()=>{
 
 
 function ContributorsComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
 
     const {data} = useSwr(ApiRoutes.AllContributors,fetchContributors);
     console.log(data);

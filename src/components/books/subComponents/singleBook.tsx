@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { ApiRoutes, ArrayUtil, EnumModals } from '../../../lib';
 import { IEntityBook } from '../../../lib/types/entities';
+import { useDispatchTyped } from '../../../store/store';
 import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';
 import { apiDeleteBook } from '../api';
@@ -20,7 +21,7 @@ interface IProps{
 }
 
 function SingleBookComponent(props:IProps){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const handleEdit = ()=>{
         ModalData.createBookModal.existing = props.book;
         dispatch(ActionsModal.showModal(EnumModals.CREATE_BOOK));

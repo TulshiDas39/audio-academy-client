@@ -1,5 +1,5 @@
-import { combineReducers } from '@reduxjs/toolkit';
-import {createSelectorHook} from 'react-redux';
+import { combineReducers} from '@reduxjs/toolkit';
+import { ReactReduxContextValue , TypedUseSelectorHook, useSelector} from 'react-redux';
 import { ReducersModals } from '../components/common/modals';
 import { ReducerLogin } from '../components/login/reducer';
 import { AuthStorage } from '../lib';
@@ -12,7 +12,7 @@ const AppReducer = combineReducers({
 });
 
 const AppResetActionType = 'app/Reset';
-export const ActionAppReset = (): { type: string } => ({ type: AppResetActionType });
+export var ActionAppReset = (): { type: string } => ({ type: AppResetActionType });
 
 export const RootReducer: (...param: Parameters<typeof AppReducer>) => ReturnType<typeof AppReducer> = (state, action) => {
   if (action.type === AppResetActionType) {
@@ -24,4 +24,8 @@ export const RootReducer: (...param: Parameters<typeof AppReducer>) => ReturnTyp
 
 export type ReduxState= ReturnType<typeof AppReducer>;
 
-export const useSelectorTyped = createSelectorHook<ReduxState>();
+export interface IReduxContext extends ReactReduxContextValue{
+
+}
+
+export const useSelectorTyped:TypedUseSelectorHook<ReduxState> = useSelector;

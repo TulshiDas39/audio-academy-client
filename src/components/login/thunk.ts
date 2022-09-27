@@ -3,7 +3,7 @@ import { batch } from 'react-redux';
 import { ApiRoutes, AuthStorage, EnumLocalStoreKey, IThunkParam } from '../../lib';
 import {IEntityUser} from '../../lib/types/entities'
 import { Intercept } from '../../lib/utils/interceptor';
-import { ActionAppReset } from '../../store/rootReducer';
+import { ActionAppReset } from '../..';
 import { ActionLogin } from './reducer';
 export class ThunkLogin{
     private static GetProfileResponse:IEntityUser = AuthStorage.getValue(EnumLocalStoreKey.PROFILE);

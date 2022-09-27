@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { AdminClip } from '../../adminClip';
 import { CommonThunk } from '../../common/thunk';
 
 
 function AssignedClipsComponent(){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         getAllClips:state.api.getAllClips   
     }))

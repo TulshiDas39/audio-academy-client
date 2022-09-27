@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaCloudUploadAlt } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
 import { EnumModals, useMultiState } from '../../../lib';
 import { useSelectorTyped } from '../../../store/rootReducer';
+import { useDispatchTyped } from '../../../store/store';
 import { apiSubmitClip } from '../../contributorClip';
 import { ModalData } from './modalData';
 import { ActionsModal } from './reducers';
@@ -20,7 +20,7 @@ const initialState:IState={
 
 function ResubmitModalComponent(){
     const Data = ModalData.resubmitModal;
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const store = useSelectorTyped((state)=>({
         show: state.modals.openModals.includes(EnumModals.RESUBMIT_CLIP),
     }))

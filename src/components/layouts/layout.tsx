@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { LayoutRoutes, UiRoutes } from '../../lib';
 import { AuthenticatedLayout,PublicLayout } from './subComponents';
 import './layout.scss'
@@ -7,10 +7,10 @@ import './layout.scss'
 function LayoutComponent(){
     console.log('rendering');
     return (
-        <Switch>
-            <Route path={LayoutRoutes.Public} component={PublicLayout} />
-            <Route path={UiRoutes.Root} component={AuthenticatedLayout} />
-        </Switch>
+        <Routes>
+            <Route path={LayoutRoutes.Public} element={<PublicLayout />} />
+            <Route path={UiRoutes.Root} element={<AuthenticatedLayout />} />
+        </Routes>
     )
     
 }

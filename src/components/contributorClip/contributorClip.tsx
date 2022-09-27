@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { ActionsModal } from '../common/modals';
 import { ModalData } from '../common/modals/modalData';
 import { apiGetBookDetails } from './api';
+import { useDispatchTyped } from '../../store/store';
 
 interface IProps{
     clip:IClipEntity;
@@ -19,7 +20,7 @@ interface IState{
 }
 const initialState = {} as IState;
 function ContributorClipComponent(props:IProps){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const [state,setState]=useMultiState(initialState);
 
     const handleSubmit = ()=>{

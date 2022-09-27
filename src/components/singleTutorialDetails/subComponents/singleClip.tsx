@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { mutate } from 'swr';
 import { apiDownloadFile, ArrayUtil, DownloadAudio, EnumModals, getFileName } from '../../../lib';
 import { IClipModel } from '../../../lib/types/models';
+import { useDispatchTyped } from '../../../store/store';
 import { ThreeDotCustomToggle } from '../../books/subComponents';
 import { ActionsModal } from '../../common/modals';
 import { ModalData } from '../../common/modals/modalData';
@@ -15,7 +16,7 @@ interface IProps{
 }
 
 function ClipComponent(props:IProps){
-    const dispatch = useDispatch();
+    const dispatch = useDispatchTyped();
     const handleEdit=()=>{
         ModalData.createClipModal.existing = props.clip;
         dispatch(ActionsModal.showModal(EnumModals.CREATE_CLIP));
